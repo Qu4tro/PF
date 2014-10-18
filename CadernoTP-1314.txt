@@ -1,0 +1,2387 @@
+Programa¸ca˜o Funcional
+2013/14
+Caderno de Exerc´ıcios
+
+1
+
+Fun¸
+c˜
+oes n˜
+ao recursivas
+1. Usando as seguintes fun¸c˜
+oes pr´e-definidas do Haskell:
+• length l: o n´
+umero de elementos da lista l
+• head l: a cabe¸ca da lista (n˜
+ao vazia) l
+• tail l: a cauda lista (n˜
+ao vazia) l
+• last l: o u
+´ltimo elemento da lista (n˜ao vazia) l
+• sqrt x: a raiz quadrada de x
+• div x y: a divis˜
+ao inteira de x por y
+• mod x y: o resto da divis˜
+ao inteira de x por y
+defina as seguintes fun¸c˜
+oes:
+(a) perimetro – que calcula o per´ımetro de uma circunferˆencia, dado o comprimento do seu
+raio.
+(b) dist – que calcula a distˆ
+ancia entre dois pontos no plano Cartesiano. Cada ponto ´e um
+par de valores do tipo Float.
+(c) primUlt – que recebe uma lista e devolve um par com o primeiro e o u
+´ltimo elemento
+dessa lista.
+(d) multiplo – tal que multiplo m n testa se o n´
+umero inteiro m ´e m´
+ultiplo de n.
+(e) truncaImpar – que recebe uma lista e, se o comprimento da lista for ´ımpar retira-lhe o
+primeiro elemento, caso contr´
+ario devolve a pr´opria lista.
+(f) max2 – que calcula o maior de dois n´
+umeros inteiros.
+(g) max3 – que calcula o maior de trˆes n´
+umeros inteiros. Para isso apresente duas defini¸c˜oes
+alternativas: recorrendo ou n˜
+ao `a fun¸c˜ao max2 definida na al´ınea anterior.
+2. Num triˆ
+angulo verifica-se sempre que a soma dos comprimentos de dois dos lados ´e superior
+a do terceiro. A esta propriedade chama-se desigualdade triangular. Defina uma fun¸c˜ao que,
+`
+dados trˆes n´
+umeros, teste se esses n´
+umeros correspondem aos comprimentos dos lados de um
+triˆ
+angulo.
+3. Vamos representar um ponto por um par de n´
+umeros que representam as suas coordenadas
+no plano Cartesiano.
+type Ponto = (Float,Float)
+
+1
+
+(a) Defina uma fun¸c˜
+ao que recebe 3 pontos que s˜ao os v´ertices de um triˆangulo e devolve
+um tuplo com o comprimento dos seus lados.
+(b) Defina uma fun¸c˜
+ao que recebe 3 pontos que s˜ao os v´ertices de um triˆangulo e calcula o
+per´ımetro desse triˆ
+angulo.
+(c) Defina uma fun¸c˜
+ao que recebe 2 pontos que s˜ao os v´ertices da diagonal de um rectˆangulo
+paralelo aos eixos e constroi uma lista com os 4 pontos desse rectˆangulo.
+4. Defina uma fun¸c˜
+ao que recebe os (3) coeficientes de um polin´omio de 2o grau e que calcula o
+n´
+umero de ra´ızes (reais) desse polin´omio.
+5. Usando a fun¸c˜
+ao anterior, defina uma fun¸c˜ao que, dados os coeficientes de um polin´omio de
+2o grau, calcula a lista das suas ra´ızes reais.
+6. As fun¸c˜
+oes das duas al´ıneas anteriores podem receber um tuplo com os coeficientes do polin´omio,
+ou receber os 3 coeficientes separadamente. Defina a vers˜ao alternativa ao que definiu acima.
+7. Utilisando as fun¸c˜
+oes ord::Char->Int e chr::Int->Char defina as seguintes fun¸c˜oes:
+(a) isLower :: Char -> Bool
+(b) isDigit :: Char -> Bool
+(c) isAlpha :: Char -> Bool
+
+(d) toUpper :: Char -> Char
+(e) intToDigit :: Int -> Char
+(f) digitToInt :: Char -> Int
+
+Obs: todas estas fun¸c˜
+oes j´
+a est˜
+ao definidas no m´odulo Data.Char .
+8. Usando as fun¸c˜
+oes do m´
+odulo Data.Char
+(a) Defina a fun¸c˜
+ao primMai, e o seu tipo, que recebe uma string como argumento e testa se
+o seu primeiro caracter ´e uma letra mai´
+uscula.
+(b) Defina a fun¸c˜
+ao segMin, e o seu tipo, que recebe uma string como argumento e testa se
+o seu segundo caracter ´e uma letra min´
+uscula.
+9. Vamos representar horas por um par de n´
+umeros inteiros:
+type Hora = (Int,Int)
+Assim o par (0,15) significa meia noite e um quarto e (13,45) duas menos um quarto. Defina
+fun¸c˜
+oes para:
+(a)
+(b)
+(c)
+(d)
+(e)
+(f)
+
+testar se um par de inteiros representa uma hora do dia v´alida;
+testar se uma hora ´e ou n˜
+ao depois de outra (compara¸c˜ao);
+converter um valor em horas (par de inteiros) para minutos (inteiro);
+converter um valor em minutos para horas;
+calcular a diferen¸ca entre duas horas (cujo resultado deve ser o n´
+umero de minutos)
+adicionar um determinado n´
+umero de minutos a uma dada hora.
+
+10. Analise a seguinte defini¸c˜
+ao e apresente uma defini¸c˜ao alternativa que use concordˆancia de
+padr˜
+oes em vez dos if s.
+opp :: (Int,(Int,Int)) -> Int
+opp z = if ((fst z) == 1)
+then (fst (snd z)) + (snd (snd z))
+else if ((fst z) == 2)
+then (fst (snd z)) - (snd (snd z))
+else 0
+2
+
+2
+
+Fun¸
+c˜
+oes recursivas
+
+11. Indique como ´e que o interpretador de haskell avalia as express˜oes das al´ıneas que se seguem,
+apresentando a cadeia de redu¸c˜
+ao de cada uma dessas express˜oes (i.e., os v´arios passos interm´edios at´e se chegar ao valor final).
+(a) Considere a defini¸c˜
+ao da seguinte fun¸c˜ao
+funA :: [Float] -> [Float]
+funA [] = []
+funA (h:t) = if h>=0 then h : (funA t)
+else (funA t)
+Diga, justificando, qual ´e o valor de funA [3,-5,0,-3,2].
+(b) Considere a defini¸c˜
+ao da seguinte fun¸c˜ao
+funB :: [Float] -> Float
+funB [] = 1
+funB (x:xs) = x * (funB xs)
+Diga, justificando, qual ´e o valor de funB [3,5,2].
+(c) Considere a defini¸c˜
+ao da seguinte fun¸c˜ao
+funC :: [Float] -> Float
+funC [] = 0
+funC (y:ys) = y^2 + (funC ys)
+Diga, justificando, qual ´e o valor de funC [2,3,5].
+(d) Considere a defini¸c˜
+ao da seguinte fun¸c˜ao
+funD :: [Int] -> [Int]
+funD [] = []
+funD (h:t) = if (mod h 2)==0 then h : (funD t)
+else (funD t)
+Diga, justificando, qual ´e o valor de funD [8,5,12,7]
+(e) Considere a seguinte defini¸c˜
+ao
+p
+p
+p
+p
+
+:: Int -> Bool
+0 = True
+1 = False
+x | x > 1 = p (x-2)
+
+Diga, justificando, qual ´e o valor de p 5.
+(f) Considere a seguinte defini¸c˜
+ao
+f l = g [] l
+g l [] = l
+g l (h:t) = g (h:l) t
+Diga, justificando, qual ´e o valor de f "otrec" ?
+12. Defina recursivamente as seguintes fun¸c˜oes sobre listas:
+(a) dobros :: [Float] -> [Float] que recebe uma lista e produz a lista em que cada
+elemento ´e o dobro do valor correspondente na lista de entrada.
+3
+
+(b) ocorre :: Char -> String -> Int que calcula o n´
+umero de vezes que um caracter
+ocorre numa string.
+(c) pmaior :: Int -> [Int] -> Int que recebe um inteiro n e uma lista l de inteiros e
+devolve o primeiro n´
+umero em l que ´e maior do que n. Se nenhum n´
+umero em l for maior
+do que n, devolve n.
+(d) repetidos ::
+
+[Int] -> Bool que testa se uma lista tem elementos repetidos.
+
+(e) nums :: String -> [Int] recebe uma string e devolve uma lista com os algarismos
+que occorem nessa string, pela mesma ordem. (Obs: relembre as fun¸c˜oes do exerc´ıcio 7.)
+(f) tresUlt :: [a] -> [a] devolve os u
+´ltimos trˆes elementos de uma lista, Se a lista de
+entrada tiver menos de trˆes elementos, devolve a pr´opria lista.
+(g) posImpares :: [a] -> [a] calcula a lista com os elementos que occorem nas posi¸c˜aoes
+impares da lista de entrada.
+(h) Defina a fun¸c˜
+ao somaNeg :: [Int] -> Int que soma todos os n´
+umeros negativos da
+lista de entrada.
+(i) Defina a fun¸c˜
+ao soDigitos :: [Char] -> [Char] que recebe uma lista de caracteres, e
+selecciona dessa lista os caracteres que s˜ao algarismos. Pode usar as fun¸c˜oes no m´odulo
+Data.Char.
+(j) Defina a fun¸c˜
+ao minusculas :: [Char] -> Int que recebe uma lista de caracteres, e
+conta quantos desses caracteres s˜ao letras min´
+usculas. Pode usar as fun¸c˜oes no m´odulo
+Data.Char.
+(k) ordena ::
+
+[a] -> [a] que ordena uma lista.
+
+13. Considere que se definiu em Haskell o tipo Jogo de modo a definir resultados de jogos de
+futebol.
+type Jogo = (String,Int,String,Int)
+
+-- (Eq.casa,golos,Eq.visitante,golos)
+
+(a) Escreva uma fun¸c˜
+ao golosEquipa (e o seu tipo), que dado um jogo e o nome de uma
+equipa, d´
+a como resultado os golos que essa equipa marcou. Caso a equipa n˜ao tenha
+participado no jogo ent˜
+ao a fun¸c˜ao devolve o valor -1.
+(b) Escreva uma fun¸c˜
+ao resJogo (e o seu tipo), que dado um jogo devolve um character
+com valor ’1’ (indicando que ganhou a equipa da casa), ’x’ (indicando empate) e ’2’
+(vit´
+ario da equipa visitante). Por exemplo, resJogo ("Alemanha",2,"Portugal",3)
+d´
+a como resultado ’2’.
+(c) Escreva uma fun¸c˜
+ao resJogo (e o seu tipo), que dado um jogo devolve uma string que
+indica se ganhou a equipa da casa, a equipa visitante, ou se empataram. Por exemplo,
+resJogo ("Alemanha",2,"Portugal",3) d´a como resultado a string "ganhou equipa
+visitante".
+(d) Escreva uma fun¸c˜
+ao, e o seu tipo, que dado uma lista de jogos indica quantos jogos
+terminaram em empate.
+(e) Escreva a fun¸c˜
+ao jogosComXGolos:: [Jogo] -> Int -> Int, que dado uma lista de
+jogos e um n´
+umero de golos, indica o n´
+umero de jogos com esse n´
+umero de golos.
+(f) Escreva uma fun¸c˜
+ao, e o seu tipo, que dado uma lista de jogos indica quantos jogos foram
+ganhos por equipadas visitantes.
+14. Considere as seguintes defini¸c˜
+oes de tipo para representar c´ırculos (guardando o centro e raio)
+
+4
+
+type Ponto = (Float, Float)
+type Circulo = (Ponto, Float)
+
+-- (Abcissa, Ordenada)
+-- (Centro, Raio)
+
+(a) Defina uma fun¸c˜
+ao fora :: Ponto -> Circulo -> Bool que testa se um ponto est´a
+fora de um c´ırculo (i.e., se distˆancia ao centro ´e maior do que o raio).
+(b) Defina uma fun¸c˜
+ao filtraFora :: Circulo -> [Ponto] -> Int que, dado um c´ırculo
+e uma lista de pontos, determina quantos pontos da lista est˜ao fora do c´ırculo dado (use,
+se precisar, a fun¸c˜
+ao anterior).
+(c) Defina uma fun¸c˜
+ao dentro :: Ponto -> Circulo -> Bool que testa se um ponto est´a
+dentro de um c´ırculo (i.e., se a distˆancia ao centro ´e menod do que o raio).
+(d) Defina uma fun¸c˜
+ao filtraDentro :: Ponto -> [Circulo] -> Int que, dado um ponto
+e uma lista de c´ırculos, determina quantos c´ırculos da lista contˆem o ponto dado (use,
+se precisar, a fun¸c˜
+ao anterior).
+15. Considere os seguintes tipos para representar pontos e rectˆangulos, respectivamente. Assuma
+que os rectˆ
+angulos tˆem os lados paralelos aos eixos e s˜ao representados apenas por dois dos
+pontos mais afastados.
+type Ponto = (Float,Float)
+type Rectangulo = (Ponto,Ponto)
+(a) Defina as seguintes fun¸c˜
+oes:
+• quadrado :: Rectangulo -> Bool que testa se um rectˆangulo ´e um quadrado.
+• contaQuadrados :: [Rectangulo] -> Int que, dada uma lista com rectˆangulos,
+conta quantos deles s˜
+ao quadrados.
+(b) Defina as seguintes fun¸c˜
+oes:
+• roda :: Rectangulo -> Rectangulo que roda um rectˆangulo 90o (centrado no
+primeiro ponto).
+• rodaTudo :: [Rectangulo] -> [Rectangulo] que, dada uma lista com rectˆangulos,
+roda todos os rectˆ
+angulos de acordo com a defini¸c˜ao anterior.
+(c) Defina as seguintes fun¸c˜
+oes:
+• area :: Rectangulo -> Float que determina a ´area de um rectˆangulo.
+• areaTotal :: [Rectangulo] -> Float que, dada uma lista com rectˆangulos, determina a ´
+area total que eles ocupam.
+(d) Defina as seguintes fun¸c˜
+oes:
+• escala :: Float -> Rectangulo -> Rectangulo que escala um rectˆangulo de acordo
+com um dado factor (mantendo o primeiro ponto).
+• escalaTudo :: Float -> [Rectangulo] -> [Rectangulo] que, dada um factor e
+uma lista com rectˆ
+angulos, escala todos os rectˆangulos de acordo com a defini¸c˜ao
+anterior.
+16. Defina as seguintes fun¸c˜
+oes sobre n´
+umeros inteiros n˜ao negativos:
+(a) (><) :: Int -> Int -> Int para multiplicar dois n´
+umeros inteiros (por somas sucessivas).
+(b) div, mod :: Int -> Int -> Int que calculam a divis˜ao e o resto da divis˜ao inteiras
+por subtrac¸c˜
+oes sucessivas.
+
+5
+
+(c) power :: Int -> Int -> Int que calcula a potˆencia inteira de um n´
+umero por multiplica¸c˜
+oes sucessivas.
+(d) uns ::
+(e) primo ::
+
+Int -> Int que calcula quantos bits 1 s˜ao usados para representar um n´
+umero.
+Int -> Bool que testa se um n´
+umero ´e primo.
+
+17. Defina as seguintes fun¸c˜
+oes sobre listas de pares:
+(a) primeiros :: [(a,b)] -> [a] que calcula a lista das primeiras componentes.
+Por exemplo, primeiros [(10,21), (3, 55), (66,3)] = [10,3,66]
+(b) nosPrimeiros :: a -> [(a,b)] -> Bool que testa se um elemento aparece na lista
+como primeira componente de algum dos pares.
+(c) minFst :: (Ord a) => [(a,b)] -> a que calcula a menor primeira componente.
+Por exemplo, minFst [(10,21), (3, 55), (66,3)] = 3
+(d) sndMinFst :: (Ord a) => [(a,b)] -> b que calcula a segunda componente associada `
+a menor primeira componente.
+Por exemplo, sndMinFst [(10,21), (3, 55), (66,3)] = 55
+(e) ordenaSnd :: [(a,b)] -> [(a,b)] que ordena uma lista por ordem crescente da segunda componente.
+
+3
+
+Problemas (parte 1)
+
+18. Considere o seguinte tipo de dados para armazenar informa¸c˜ao sobre uma turma de alunos:
+type
+type
+type
+type
+type
+type
+
+Aluno = (Numero,Nome,ParteI,ParteII)
+Numero = Int
+Nome = String
+ParteI = Float
+ParteII = Float
+Turma = [Aluno]
+
+Defina fun¸c˜
+oes para:
+(a) Testar se uma turma ´e v´
+alida (i.e., os alunos tem todos n´
+umeros diferentes, as notas da
+Parte I est˜
+ao entre 0 e 12, e as notas da Parte II entre 0 e 8).
+(b) Seleciona os alunos que passaram (i.e., a nota da Parte I n˜ao ´e inferior a 8, e a soma das
+nota da Parte I e II ´e superior ou igual a 9,5).
+(c) Calcula a nota final dos alunos que passaram.
+(d) Calcular a m´edia das notas dos alunos que passaram.
+(e) Determinar o nome de um aluno com nota mais alta.
+19. Assumindo que uma hora ´e representada por um par de inteiros, uma viagem pode ser representada por uma sequˆencia de etapas, onde cada etapa ´e representada por um par de horas
+(partida, chegada):
+type Hora = (Int,Int)
+type Etapa = (Hora,Hora)
+type Viagem = [Etapa]
+
+6
+
+Por exemplo, se uma viagem for
+[((9,30), (10,25)), ((11,20), (12,45)) , ((13,30), (14,45))]
+significa que teve trˆes etapas:
+• a primeira come¸cou `
+as 9 e um quarto e terminou `as 10 e 25;
+• a segunda come¸cou `
+as 11 e 20 e terminou `a uma menos um quarto;
+• a terceira come¸cou `
+as 1 e meia e terminou `as 3 menos um quarto;
+Utilizando as fun¸c˜
+oes sobre horas que definiu no exerc´ıcio 9, defina as seguintes fun¸c˜oes:
+(a) Testar se uma etapa est´
+a bem constru´ıda (i.e., o tempo de chegada ´e superior ao de
+partida e as horas s˜
+ao v´
+alidas).
+(b) Testa se uma viagem est´
+a bem constru´ıda (i.e., se para cada etapa, o tempo de chegada
+´e superior ao de partida, e se a etapa seguinte come¸ca depois da etapa anterior ter
+terminado).
+(c) Calcular a hora de partida e de chegada de uma dada viagem.
+(d) Dada uma viagem v´
+alida, calcular o tempo total de viagem efectiva.
+(e) Calcular o tempo total de espera.
+(f) Calcular o tempo total da viagem (a soma dos tempos de espera e de viagem efectiva).
+20. Considere as seguintes defini¸c˜
+oes.
+type
+type
+type
+type
+
+Ponto = (Float,Float)
+-- (abcissa,ordenada)
+Rectangulo = (Ponto,Float,Float) -- (canto sup.esq., larg, alt)
+Triangulo = (Ponto,Ponto,Ponto)
+Poligonal = [Ponto]
+
+distancia :: Ponto -> Ponto -> Float
+distancia (a,b) (c,d) = sqrt (((c-a)^2) + ((b-d)^2))
+(a) Defina uma fun¸c˜
+ao que calcule o comprimento de uma linha poligonal.
+(b) Defina uma fun¸c˜
+ao que converta um elemento do tipo Triangulo na correspondente linha
+poligonal.
+(c) Repita o al´ınea anterior para elementos do tipo Rectangulo.
+(d) Defina uma fun¸c˜
+ao fechada que testa se uma dada linha poligonal ´e ou n˜ao fechada.
+(e) Defina uma fun¸c˜
+ao triangula que, dada uma linha poligonal fechada e convexa, calcule
+uma lista de triˆ
+angulos cuja soma das ´areas seja igual `a ´area delimitada pela linha
+poligonal.
+(f) Suponha que existe uma fun¸ca˜o areaTriangulo que calcula a ´area de um triˆangulo.
+areaTriangulo (x,y,z)
+= let a = distancia x y
+b = distancia y z
+c = distancia z x
+s = (a+b+c) / 2 -- semi-perimetro
+in -- formula de Heron
+sqrt (s*(s-a)*(s-b)*(s-c))
+7
+
+Usando essa fun¸c˜
+ao, defina uma fun¸c˜ao que calcule a ´area delimitada por uma linha
+poligonal fechada e convexa.
+(g) Defina uma fun¸c˜
+ao mover que, dada uma linha poligonal e um ponto, d´a como resultado
+uma linha poligonal idˆentica `
+a primeira mas tendo como ponto inicial o ponto dado.
+Por exemplo, ao mover o triˆ
+angulo [(1,1),(10,10),(10,1),(1,1)] para o ponto (1,2)
+devemos obter o triˆ
+angulo [(1,2),(10,11),(10,2),(1,2)].
+(h) Defina uma fun¸c˜
+ao zoom2 que, dada uma linha poligonal, dˆe como resultado uma linha
+poligonal semelhante e com o mesmo ponto inicial mas em que o comprimento de cada
+segmento de recta ´e multiplicado por 2. Por exemplo, o rectˆangulo
+[(1,1),(1,3),(4,3),(4,1),(1,1)]
+dever´
+a ser transformado em [(1,1),(1,5),(7,5),(7,1),(1,1)]
+21. Considere que a informa¸c˜
+ao sobre um stock de uma loja est´a armazenada numa lista de tuplos
+(com o nome do produto, o seu pre¸co unit´ario, e a quantidade em stock desse produto) de
+acordo com as seguintes declara¸c˜
+oes de tipos:
+type
+type
+type
+type
+
+Stock = [(Produto,Preco,Quantidade)]
+Produto = String
+Preco = Float
+Quantidade = Float
+
+Assuma que um produto n˜
+ao ocorre mais do que uma vez na lista de stock.
+(a) Defina as seguintes fun¸c˜
+oes de manipula¸c˜ao e consulta do stock:
+i. quantos::Stock->Int, que indica quantos produtos existem em stock.
+ii. emStock::Produto->Stock->Quantidade, que indica a quantidade de um dado produto existente em stock.
+iii. consulta::Produto->Stock->(Preco,Quantidade), que indica o pre¸co e a quantidade de um dado produto existente em stock.
+iv. tabPrecos::Stock->[(Produto,Preco)], para construir uma tabela de pre¸cos.
+v. valorTotal::Stock->Float, para calcular o valor total do stock.
+vi. inflacao::Float->Stock->Stock, que aumenta uma dada percentagem a todos os
+pre¸cos.
+vii. omaisBarato::Stock->(Produto,Preco), que indica o produto mais barato e o seu
+pre¸co.
+viii. maisCaros::Preco->Stock->[Produto], que constroi a lista dos produtos caros
+(i.e., acima de um dado pre¸co).
+(b) Considere agora que tem a seguinte declara¸c˜ao de tipo para modelar uma lista de compras:
+type ListaCompras = [(Produto,Quantidade)]
+Defina as fun¸c˜
+oes que se seguem:
+i. verifLista::ListaCompras->Stock->Bool, que verifica se todos os pedidos podem
+ser satisfeitos.
+ii. falhas::ListaCompras->Stock->ListaCompras, que constroi a lista dos pedidos
+n˜
+ao satisfeitos.
+iii. custoTotal::ListaCompras->Stock->Float, que calcula o custo total da lista de
+compras.
+8
+
+iv. partePreco::Preco->ListaCompras->Stock->(ListaCompras,ListaCompras),
+que parte a lista de compras em duas: uma lista com os items inferiores a um dado
+pre¸co, e a outra com os items superiores ou iguais a esse pre¸co.
+´ diferente de uma lista
+22. Um multi-conjunto ´e um conjunto que admite elementos repetidos. E
+porque a ordem dos elementos n˜
+ao ´e relevante. Uma forma de implementar multi-conjuntos
+em Haskell ´e atrav´es de uma lista de pares, onde cada par regista um elemento e o respectivo
+n´
+umero de ocorrˆencias:
+type MSet a = [(a,Int)]
+Uma lista que representa um multi-conjunto n˜ao deve ter mais do que um par a contabilizar
+o n´
+umero de ocorrˆencias de um elemento, e o n´
+umero de ocorrˆencias deve ser sempre estritamente positivo. O multi-conjunto de caracteres {’b’,’a’,’c’,’a’,’b’,’a’} poderia, por
+exemplo, ser representado pela lista [(’b’,2),(’a’,3),(’c’,1)].
+(a) Defina a fun¸c˜
+ao elem :: Eq a => a -> MSet a -> Bool que testa se um determinado
+elemento pertence a um multi-conjunto. Por exemplo,
+> elem ’b’ [(’b’,2),(’a’,3),(’c’,1)]
+True
+> elem ’d’ [(’b’,2),(’a’,3),(’c’,1)]
+False
+(b) Defina a fun¸c˜
+ao converte :: Eq a => [a] -> MSet a que converte uma lista para um
+multi-conjunto. Por exemplo,
+> converte "bacaba"
+[(’b’,2),(’a’,3),(’c’,1)]
+(c) Defina a fun¸c˜
+ao size : MSet a -> Int que calcula o tamanho de um multi-conjunto.
+> size [(’b’,2),(’a’,3),(’c’,1)]
+6
+(d) Defina a fun¸c˜
+ao union :: Eq a => MSet a -> MSet a -> MSet a que calcula a uni˜ao
+de dois multi-conjuntos. Por exemplo,
+> union [(’a’,3),(’b’,2),(’c’,1)] [(’d’,5),(’b’,1)]
+[(’a’,3),(’b’,3),(’c’,1),(’d’,5)]
+(e) Defina a fun¸c˜
+ao elimina :: Eq a => a -> MSet a -> MSet a que elimina um elemento de um multi-conjunto. Por exemplo,
+> elimina ’a’ [(’b’,2),(’a’,3),(’c’,1)]
+[(’b’,2),(’a’,2),(’c’,1)]
+> elimina ’c’ [(’b’,2),(’a’,3),(’c’,1)]
+[(’b’,2),(’a’,3)]
+(f) Defina a fun¸c˜
+ao ordena :: MSet a -> MSet a que ordena um multi-conjunto pelo n´
+umero
+crescente de ocorrˆencias. Por exemplo,
+> ordena [(’b’,2),(’a’,3),(’c’,1)]
+[(’c’,1),(’b’,2),(’a’,3)]
+(g) Defina a fun¸c˜
+ao insere :: Eq a => a -> MSet a -> MSet a que insere um elemento
+num multi-conjunto. Por exemplo,
+
+9
+
+> insere ’a’ [(’b’,2),(’a’,3),(’c’,1)]
+[(’b’,2),(’a’,4),(’c’,1)]
+> insere ’d’ [(’b’,2),(’a’,3),(’c’,1)]
+[(’b’,2),(’a’,3),(’c’,1),(’d’,1)]
+(h) Defina a fun¸c˜
+ao moda :: MSet a -> [a] que devolve a lista dos elementos com maior
+n´
+umero de ocorrˆencias. Por exemplo,
+> moda [(’b’,2),(’a’,3),(’c’,1),(’d’,3)]
+[’a’,’d’]
+23. Considere que a GNR desenvolveu um radar port´atil para instalar nas suas viaturas de modo
+a detectar excessos de velocidade na estrada. Este radar usa a seguinte estrutura de dados
+para registar excessos de velocidade num dia:
+type
+type
+type
+type
+type
+
+Radar = [(Hora,Matricula,VelAutor,VelCond)
+Hora = (Int,Int)
+-- (horas, minutos)
+Matricula = String
+-- matricula do carro em infraccao
+VelAutor = Int
+-- velocidade autorizada
+VelCond = Float
+-- velocidade do condutor
+
+(a) Escreva a fun¸c˜
+ao, e seu tipo, que dado a matricula de um carro, calcula o excesso de
+velocidade desse carro nesse dia. Note que um carro pode ter mais do que uma infra¸c˜ao.
+(b) Escreva uma fun¸c˜
+ao que recebe a primeira componente do par Hora e devolve quantas
+infra¸c˜
+oes se realizaram nesse per´ıodo de uma hora.
+(c) Considere que o radar deve registar as infra¸c˜oes por ordem crescente da hora. Defina
+uma fun¸c˜
+ao que verifica se o radar est´a a funcionar correctamente. Pode assumir j´a
+definidas as fun¸c˜
+oes sobre o tipo Hora feitas na aula (horaMaior :: Hora -> Hora ->
+Bool).
+(d) Escreva uma fun¸c˜
+ao, e o seu tipo, que verifica se o radar registou duas infra¸c˜oes `a mesma
+hora.
+(e) Escreva uma fun¸c˜
+ao que calcula a maior infra¸c˜ao registada (i.e., maior diferen¸ca entre
+velocidade do condutor e autorizada).
+(f) Escreva a fun¸c˜
+ao que calcula o menor per´ıodo de tempo (em minutos) sem infra¸c˜oes.
+Pode assumir j´
+a definidas as fun¸c˜oes sobre o tipo Hora feitas na aula (hora2mins).
+(g) Escreva uma fun¸c˜
+ao, e o seu tipo, que verifica se houve algum carro apanhado em excesso
+de velocidade mais do que uma vez.
+(h) Escreva a fun¸c˜
+ao que dado a matricula de um carro, devolve um lista com as infra¸c˜oes
+desse carro. Esta lista cont´em pares com a hora e a velocidade em excesso do carro.
+Note que um carro pode ser apanhado em excesso mais do que uma vez no mesmo dia.
+(i) Considere que o radar deve registar as infra¸c˜oes por ordem crescente da hora. Defina
+uma fun¸c˜
+ao que verifica se o radar est´a a funcionar correctamente. Pode assumir j´a
+definidas as fun¸c˜
+oes sobre o tipo Hora feitas na aula (horaMaior :: Hora -> Hora ->
+Bool).
+(j) Escreva uma fun¸c˜
+ao, e o seu tipo, que verifica se o radar est´a a funcionar correctamente
+(isto ´e, a velocidade do condutor ´e sempre maior que a velocidade autorizada).
+(k) Escreva uma fun¸c˜
+ao que calcula o total de excesso de velocidade nesse dia.
+(l) Escreva a fun¸c˜
+ao que calcula o maior per´ıodo de tempo sem infra¸c˜oes durante o dia.
+Pode assumir j´
+a definidas as fun¸c˜oes sobre o tipo Hora feitas na aula (hora2mins).
+10
+
+24. Considere as seguintes defini¸c˜
+oes de tipos para representar os alunos inscritos na UM.
+type
+type
+type
+type
+type
+
+Inscritos = [(Num,Nome,Curso,Ano)]
+Num = Integer
+Nome = String
+Curso = String
+Ano = Integer
+
+(a) Defina a fun¸c˜
+ao aluCA :: (Curso, Ano) -> Inscritos -> Int, que calcula o n´
+umero
+de alunos inscritos num determinado ano de um dado curso.
+(b) Defina a fun¸c˜
+ao quantos :: Curso -> [Num] -> Inscritos -> Int que, dado um
+curso c, uma lista de n´
+umeros l e uma tabela de inscritos t, calcula quantos n´
+umeros da
+lista l correspondem a alunos inscritos no curso c.
+(c) Defina a fun¸c˜
+ao doAno :: Ano -> Inscritos -> [(Num, Nome, Curso)], que seleciona todos os alunos que frequentam um determinado ano.
+25. Considere as seguintes defini¸c˜
+oes de tipos para representar uma playlist de m´
+usicas.
+type
+type
+type
+type
+
+PlayList = [(Titulo,Interprete,Duracao)]
+Titulo = String
+Interprete = String
+Dutacao = Int
+-- dura¸
+c~
+ao da m´
+usica em segundos
+
+(a) Defina a fun¸c˜
+ao total ::
+
+PlayList-> Int, que calcula ao tempo total da playlist.
+
+(b) Defina a fun¸c˜
+ao temMusicas :: [Interprete] -> PlayList -> Bool, tal que testa
+se todos os int´erpretes que aparecem a lista tˆem alguma m´
+usica na playlist.
+(c) Defina a fun¸c˜
+ao maior :: PlayList-> (Titulo, Duracao), que indica o titulo e a
+dura¸c˜
+ao de uma das m´
+usicas de maior dura¸c˜ao da playlist.
+26. Considere as seguintes defin¸c˜
+oes de tipos para representar uma tabela de abreviaturas que
+associa a cada abreviatura a palavra que ela representa.
+type TabAbrev = [(Abreviatura,Palavra)]
+type Abreviatura = String
+type Palavra = String
+(a) Defina a fun¸c˜
+ao existe :: Abreviatura -> TabAbrev -> Bool, que verifica se uma
+dada abreviatura existe na tabela.
+(b) Defina a fun¸c˜
+ao substitui :: [String] -> TabAbrev -> [String], que recebe um
+texto (dado como uma lista de stings) e uma tabela de abreviaturas, substitui todas as
+abreviaturas que apare¸cam no texto pelas respectivas palavras associadas.
+(c) Defina a fun¸c˜
+ao estaOrdenada :: TabAbrev -> Bool que testa se a tabela de abreviaturas est´
+a ordenada por ordem crescente de abreviatura. (Nota: pode usar o operador
+< para comparar directamente duas strings.)
+27. Considere as seguintes defini¸c˜
+oes de tipos para representar uma tabela de registo de temperaturas.
+type TabTemp = [(Data,Temp,Temp)]
+type Data = (Int,Int,Int)
+type Temp = Float
+11
+
+-- (data, temp. m´
+ınima, temp. m´
+axima)
+-- (ano, m^
+es, dia)
+
+(a) Defina a fun¸c˜
+ao m´
+edias :: TabTemp -> [(Data,Temp)] que constroi a lista com as
+temperaturas m´edias de cada dia.
+(b) Defina a fun¸c˜
+ao decrescente :: TabTemp -> Bool que testa se a tabela est´a ordenada por ordem decrescente de data. (Nota: pode usar o operador > para comparar
+directamente duas datas.)
+(c) Defina a fun¸c˜
+ao conta :: [Data] -> TabTemp -> Int que, dada uma lista de datas
+e a tabela de registo de temperaturas, conta quantas das datas da lista tˆem registo de
+na tabela.
+28. Considere as seguintes defini¸c˜
+oes de tipo para representar polin´omios
+type Monomio = (Float,Int)
+type Polinomio = [Monomio]
+
+-- (Coeficiente, Expoente)
+
+Assuma que os polin´
+omios tˆem no m´aximo um mon´omio para cada grau e que n˜ao s˜ao armazenados mon´
+omios com coeficiente nulo. Por exemplo, o polin´omio 5 x3 + x − 5 pode ser
+representado pelas listas [(5,3),(1,1),(-5,0))] ou [(-5,0),(5,3),(1,1))].
+Defina as seguintes fun¸c˜
+oes:
+(a) coef :: Polinomio -> Int -> Float que calcula o coeficiente de um dado grau (0
+se n˜
+ao existir).
+(b) poliOk :: Polinomio -> Bool que testa se um polin´omio est´a bem constru´ıdo (i.e.,
+se n˜
+ao aparecem mon´
+omios com graus repetidos nem coeficientes nulos).
+(c) addM :: Polinomio -> Monomio -> Polinomio que adiciona um polin´omio a um mon´omio.
+N˜
+ao se esque¸ca de garantir que o polin´omio resultante n˜ao tem mon´omios de grau repetido
+nem coeficientes nulos.
+(d) addP :: Polinomio -> Polinomio -> Polinomio que adiciona dois polin´omios.
+
+4
+
+Fun¸
+c˜
+oes recursivas que devolvem ”tuplos”
+
+29. A fun¸c˜
+ao divMod :: Int -> Int -> (Int,Int), j´a predefinida no Prelude, poderia ser
+definida pela seguinte equa¸ca
+˜o:
+divMod x y = (div x y, mod x y)
+Apresente uma defini¸c˜
+ao alternativa desta fun¸c˜ao sem usar div e mod como fun¸c˜oes auxiliares.
+30. Defina uma fun¸c˜
+ao nzp :: [Int] -> (Int,Int,Int) que, dada uma lista de inteiros, conta
+o n´
+umero de valores nagativos, o n´
+umero de zeros e o n´
+umero de valores positivos, devolvendo
+um triplo com essa informa¸c˜
+ao. Certifique-se que a fun¸c˜ao que definiu percorre a lista apenas
+uma vez.
+31. Defina a fun¸c˜
+ao semSep :: String -> (String,Int), que dada uma string, lhe retira os
+separadores e conta o n´
+umero de caracteres da string resultante. Implemente a fun¸c˜ao de
+modo a fazer uma u
+´nica travessia da string. (Relembre que a fun¸c˜ao isSpace::Char->Bool
+est´
+a j´
+a definida no m´
+odulo Data.Char).
+32. Defina a fun¸c˜
+ao digitAlpha :: String -> (String,String), que dada uma string, devolve um par de strings: uma apenas com as letras presentes nessa string, e a outra apenas
+com os n´
+umeros presentes na string. Implemente a fun¸c˜ao de modo a fazer uma u
+´nica travessia da string. (Relembre que as fun¸c˜oes isDigit, isAlpha::Char->Bool est˜ao j´a definidas
+no m´
+odulo Data.Char).
+12
+
+5
+
+Listas por compreens˜
+ao
+
+33. Para cada uma das express˜
+oes seguintes, exprima por enumera¸c˜ao a lista correspondente.
+Tente ainda, para cada caso, descobrir uma outra forma de obter o mesmo resultado.
+(a) [x | x <- [1..20], mod x 2 == 0, mod x 3 == 0]
+(b) [x | x <- [y | y <- [1..20], mod y 2 == 0], mod x 3 == 0]
+(c) [(x,y) | x <- [0..20], y <- [0..20], x+y == 30]
+(d) [sum [y | y <- [1..x], odd y] | x <- [1..10]]
+34. Defina cada uma das listas seguintes por compreens˜ao.
+(a) [1,2,4,8,16,32,64,128,256,512,1024]
+(b) [(1,5),(2,4),(3,3),(4,2),(5,1)]
+(c) [[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5]]
+(d) [[1],[1,1],[1,1,1],[1,1,1,1],[1,1,1,1,1]]
+(e) [1,2,6,24,120,720]
+
+6
+
+Fun¸
+c˜
+oes de ordem superior
+
+35. Apresente defini¸c˜
+oes das seguintes fun¸c˜oes de ordem superior, j´a predefinidas no Perlude:
+(a) zipWith :: (a->b->c) -> [a] -> [b] -> [c] que combina os elementos de duas listas usando uma fun¸c˜
+ao espec´ıfica; por exemplo zipWith (+) [1,2,3,4,5] [10,20,30,40]
+= [11,22,33,44].
+(b) takeWhile :: (a->Bool) -> [a] -> [a] que determina os primeiros elementos da
+lista que satisfazem um dado predicado; por exemplo takeWhile odd [1,3,4,5,6,6]
+= [1,3].
+(c) dropWhile :: (a->Bool) -> [a] -> [a] que elimina os primeiros elementos da lista
+que satisfazem um dado predicado; por exemplo dropWhile odd [1,3,4,5,6,6] = [4,5,6,6].
+(d) span :: (a-> Bool) -> [a] -> ([a],[a]), que calcula simultaneamente os dois resultados anteriores. Note que apesar de poder ser definida `a custa das outras duas,
+usando a defini¸c˜
+ao
+span p l = (takeWhile p l, dropWhile p l)
+nessa defini¸c˜
+ao h´
+a trabalho redundante que pode ser evitado. Apresente uma defini¸c˜ao
+alternativa onde n˜
+ao haja duplica¸c˜ao de trabalho.
+36. Defina a fun¸c˜
+ao agrupa :: String -> [(Char,Int)] que dada uma string, junta num par
+(x,n) as n ocorrˆencias consecutivas de um caracter x. Por exemplo, agrupa ‘‘aaakkkkkwaa’’
+deve dar como resultado a lista [(’a’,3), (’k’,4), (’w’,1), (’a’,2)].
+37. Considere a seguinte defini¸c˜
+ao usando listas por compreens˜ao:
+prod :: [a] -> [b] -> [(a,b)]
+prod l1 l2 = [(a,b) | a <- l1, b <- l2]
+Por exemplo,
+prod [1,2] [’a’,’b’,’c’] = [(1,’a’),(1,’b’),(1,’c’),(2,’a’),(2,’b’),(2,’c’)]
+13
+
+De forma a definir esta fun¸c˜
+ao sem usar o mecanismo de defini¸c˜ao de listas por compreens˜ao,
+vamos defini-la `
+a custa de outras fun¸c˜oes auxiliares:
+(a) A fun¸c˜
+ao criaLinhas :: [a] -> [b] -> [[(a,b)]] aplica a fun¸c˜ao anterior a cada
+elemento da primeira lista.
+Por exemplo,
+criaLinhas [1,2] [’a’,’b’,’c’] =
+[[(1,’a’),(1,’b’),(1,’c’)],[(2,’a’),(2,’b’),(2,’c’)]]
+i. Apresente uma defini¸c˜
+ao (explicitamente) recursiva da fun¸c˜ao criaLinhas.
+ii. Complete a seguinte defini¸c˜ao da fun¸c˜ao criaLinhas (comece por determinar o tipo
+da fun¸c˜
+ao f)
+crialinhas l1 l2 = map (f l2) l1
+where f l x = ...
+iii. Finalmente, podemos definir a fun¸c˜ao pretendida, concatenando todas as linhas produzidas pela fun¸c˜
+ao anterior.
+prod l1 l2 = concat (criaLinhas l1 l2)
+Apresente uma defini¸c˜
+ao da fun¸c˜ao concat :: [[a]] -> [a] que concatena uma
+lista de listas numa lista s´
+o.
+(b) A fun¸c˜
+ao criaPares :: a -> [b] -> [(a,b)] recebe um elemento do tipo a e uma
+lista e cria uma lista de pares cuja primeira componente ´e sempre a mesma.
+Por exemplo, criaPares 1 [’a’,’b’,’c’] = [(1,’a’),(1,’b’),(1,’c’)]
+i. Apresente uma defini¸c˜
+ao (explicitamente) recursiva da fun¸c˜ao criaPares.
+ii. Complete a seguinte defini¸c˜ao da fun¸c˜ao criaPares (comece por determinar o tipo
+da fun¸c˜
+ao acrescenta)
+criaPares a bs = map (acrescenta a) bs
+where acrescenta a x = ...
+iii. Complete a seguinte defini¸c˜ao de forma a que a fun¸c˜ao prod’ seja equivalente a
+prod.
+prod’ l1 l2 = concat (map ... l1)
+38. Considere a fun¸c˜
+ao seguinte
+indicativo :: String -> [String] -> [String]
+indicativo ind telefs = filter (concorda ind) telefs
+where concorda :: String -> String -> Bool
+concorda [] _ = True
+concorda (x:xs) (y:ys) = (x==y) && (concorda xs ys)
+concorda (x:xs) [] = False
+que recebe uma lista de algarismos com um indicativo, uma lista de listas de algarismos
+representando n´
+umeros de telefone, e seleciona os n´
+umeros que come¸cam com o indicativo
+dado. Por exemplo:
+indicativo "253" ["253116787","213448023","253119905"]
+devolve ["253116787","253119905"].
+Redefina esta fun¸c˜
+ao com recursividade expl´ıcita, isto ´e, evitando a utiliza¸c˜ao de filter.
+
+14
+
+39. Defina uma fun¸c˜
+ao toDigits :: Int -> [Int] que, dado um n´
+umero (na base 10), calcula
+a lista dos seus d´ıgitos (por ordem inversa). Por exemplo, toDigits 1234 deve corresponder
+a [4,3,2,1]. Note que
+1234 = 1 × 103 + 2 × 102 + 3 × 101 + 4 × 100
+40. Pretende-se agora que defina a fun¸c˜ao inversa da anterior fromDigits ::
+Por exemplo, fromDigits [4,3,2,1] deve corresponder a 1234.
+
+[Int] -> Int.
+
+(a) Defina a fun¸c˜
+ao com aux´ılio da fun¸c˜ao zipWith.
+(b) Defina a fun¸c˜
+ao com recursividade expl´ıcita. Note que
+fromDigits [4,3,2,1] = 1 × 103 + 2 × 102 + 3 × 101 + 4 × 100
+= 4 + 10 × (3 + 10 × (2 + 10 × (1 + 10 × 0)))
+(c) Defina agora a fun¸c˜
+ao usando um foldr.
+41. Usando as fun¸c˜
+oes anteriores e as fun¸c˜oes do m´odulo Data.Char, intToDigit ::
+Char e digitToInt :: Char -> Int:
+
+Int ->
+
+(a) Defina a fun¸c˜
+ao intStr :: Int -> String que converte um inteiro numa string. Por
+exemplo, intStr 1234 deve corresponder `a string "1234".
+(b) Defina a fun¸c˜
+ao strInt :: String -> Int que converte a representa¸c˜ao de um inteiro
+(em base 10) nesse inteiro. Por exemplo, strInt "12345" deve corresponder ao n´
+umero
+12345.
+42. Defina a fun¸c˜
+ao subLists :: [a] -> [[a]] que calcula todas as sublistas de uma lista;
+por exemplo, subLists [1,2,3] = [[1,2,3],[1,2],[1,3],[1],[2,3],[2],[3],[]].
+43. Assuma que a informa¸c˜
+ao sobre os resultados dos jogos de uma jornada de um campeonato
+de futebol est´
+a guardada na seguinte estrutura de dados:
+type
+type
+type
+type
+
+Jornada = [Jogo]
+Jogo = ((Equipa,Golos),(Equipa,Golos))
+Equipa = String
+Golos = Int
+
+(a) Defina a fun¸c˜
+ao totalGolos ::
+nada.
+
+-- (eq. casa, eq. visitante)
+
+Jornada -> Int que calcula o total de golos da jor-
+
+(b) Defina a fun¸c˜
+ao numGolos :: Int -> Jornada -> [Jogo] de forma a que (numGolos
+x j) represente a lista de jogos com mais de x golos marcados. De preferˆencia, use
+fun¸c˜
+oes de ordem superior.
+(c) Considere a seguinte fun¸c˜
+ao:
+venceCasa :: Jornada -> [Equipa]
+venceCasa j = map casa (filter vc j)
+Defina as fun¸c˜
+oes vc e casa de forma a que a fun¸c˜ao venceCasa calcule a lista das equipas
+que venceram em casa numa dada jornada.
+(d) Defina a fun¸c˜
+ao pontos :: Jornada -> [(Equipa,Int)] que calcula os pontos que
+cada equipa obteve na jornada (venceu - 3 pontos; perdeu - 0 pontos; empatou - 1
+ponto)
+15
+
+(e) Defina a fun¸c˜
+ao empates :: Jornada -> [Jogo] que seleciona os jogos da jornada em
+que ocorreram empates. De preferˆencia, use fun¸c˜oes de ordem superior.
+(f) Considere a seguinte fun¸c˜
+ao:
+golosMarcados :: Jornada -> Int
+golosMarcados j = sum (map soma j)
+Defina a fun¸c˜
+ao soma de forma a que a fun¸c˜ao golosMarcados calcule o n´
+umero total de
+golos marcados numa jornada.
+44. Apresente uma defini¸c˜
+ao alternativa das seguintes fun¸c˜oes, usando recursividade expl´ıcita em
+vez de fun¸c˜
+oes de ordem superior.
+(a) func1
+func1
+(b) func2
+func2
+(c) func3
+func3
+
+:: [[a]] -> [Int]
+l = map length (filter null l)
+:: [a] -> [a] -> Bool
+l m = and (zipWith (==) l m)
+:: Ord a => a -> [a] -> Int
+x l = length (filter (>= x) l)
+
+45. Considere que a GNR desenvolveu um radar port´atil para instalar nas suas viaturas de modo
+a detectar excessos de velocidade na estrada. Este radar usa a seguinte estrutura de dados
+para registar excessos de velocidade num dia:
+type
+type
+type
+type
+type
+
+Radar = [(Hora,Matricula,VelAutor,VelCond)]
+Hora = (Int,Int)
+Matricula = String
+-- matricula do carro em infraccao
+VelAutor = Int
+-- velocidade autorizada
+VelCond = Float
+-- velocidade do condutor
+
+(a) Geralmente a GNR considera que a velocidade registada do condutor pode ter um erro
+de 10% (em excesso). Escreva uma fun¸c˜ao de ordem superior que dado as infra¸c˜oes
+registadas pelo radar num dia, aplica esta tolerˆancia `a velocidade registada.
+(b) Escreva uma fun¸c˜
+ao de ordem superior que dado a matricula de um carro e as insfra¸c˜oes
+registadas num dia, devolve uma lista com as infra¸c˜oes desse carro. Note que um carro
+pode ser apanhado em excesso mais do que uma vez no mesmo dia.
+(c) Escreva uma fun¸c˜
+ao que dado os registos de infra¸c˜oes de um dia, devolve a lista com a
+matricula do carro e o excesso de velocidade a que se deslocava. O excesso de velocidade
+para um registo ´e a diferen¸ca entre velocidade real (ap´os aplicar a tolerˆencia) e velocidade
+autorizada.
+(d) Escreva um fun¸c˜
+ao calcula o valor total apurado em multas por excesso de velocidade
+num dia. Assuma que o valor das multas ´e: 60Eur para excessos n˜ao superiores 20Km/h;
+120Eur para excessos entre 21 e 40 Km/h; 300Eur para excessos entre 41 e 60 Km/h; e
+500Eur para excessos superiores a 60Km/h.
+46. Considere que a GNR, para registar os teste de alcoolemia que realiza nas suas opera¸c˜oes
+stop, utiliza a seguinte estrutura de dados:
+type
+type
+type
+type
+type
+
+RegAlcool = [(Nome,Sexo,Idade,NA)]
+Nome = String
+Sexo = Char
+-- ’M’: Masculino ’F’: Feminino
+Idade = Int
+NA
+= Float
+-- Nivel de Alcool
+16
+
+(a) Escreva uma fun¸c˜
+ao de ordem superior que dados os testes realizados, devolve informa¸c˜ao
+dos testes realizados a pessoas menores de 21 anos.
+(b) Considerando que a multa a pagar para quem conduzir com uma taxa no sangue superior
+a 0.5 se calcula de acordo com a regra N´
+ıvel de ´
+Alcool * 100 EUR, escreva uma fun¸c˜ao
+que dados os testes realizados, produz uma lista onde se indica: o nome e o valor da
+multa a pagar (0 EUR caso esteja legal).
+(c) Defina uma fun¸c˜
+ao que c´
+alcula a m´edia de idades das pessoas que fizeram o teste de
+alcoolemia.
+(d) Escreva uma fun¸c˜
+ao de ordem superior que dados os testes realizados, devolve os testes
+realizados a mulheres apenas.
+(e) Considerando que a lei autoriza a condu¸c˜ao com uma taxa de alco´ol no sangue de 0.5,
+escreva uma fun¸c˜
+ao que dados os testes realizados, produz uma lista onde se indica: o
+nome da pessoa (que fez o teste) e uma string a indicar se a condu¸c˜ao ´e ‘‘legal’’ ou
+‘‘ilegal’’.
+47. Uma forma de representar polin´
+omios de uma vari´avel ´e usar listas de mon´omios representados
+por pares (coeficiente, expoente)
+type Polinomio = [Monomio]
+type Monomio = (Float,Int)
+Por exemplo, [(2,3), (3,4), (5,3), (4,5)] representa o polin´omio 2 x3 + 3 x4 + 5 x3 +
+4 x5 .
+(a) Defina uma fun¸c˜
+ao conta :: Int -> Polinomio -> Int de forma a que (conta n p)
+indica quantos mon´
+omios de grau n existem em p.
+(b) Defina uma fun¸c˜
+ao selgrau :: Int -> Polinomio -> Polinomio de forma a que
+(selgrau n p) que selecione do polin´omio p os mon´omios de grau superior a n. De
+preferˆencia, use fun¸c˜
+oes de ordem superior.
+(c) Complete a defini¸c˜
+ao da fun¸c˜
+ao deriv de forma a que esta calcule a derivada de um
+polin´
+omio.
+deriv :: Polinomio -> Polinomio
+deriv p = map ........ p
+(d) Defina uma fun¸c˜
+ao calcula :: Float -> Polinomio -> Float, que calcula o valor
+do polin´
+omio num dado valor de x.
+(e) Defina a fun¸c˜
+ao simp :: Polinomio -> Polinomio que retira de um polin´omio os
+mon´
+omios de coeficiente zero. De preferˆencia, use fun¸c˜oes de ordem superior.
+(f) Complete a defini¸c˜
+ao da fun¸ca˜o mult de forma a que esta calcule o resultado da multiplica¸c˜
+ao de um mon´
+omio por um polin´omio.
+mult :: Monomio -> Polinomio -> Polinomio
+mult (c,e) p = map ........ p
+
+7
+
+Problemas num´
+ericos
+
+48. Considere a sequinte defini¸c˜
+ao para representar matrizes:
+type Mat a = [[a]]
+17
+
+Defina as seguintes fun¸c˜
+oes sobre matrizes (use, sempre que achar apropriado, fun¸c˜oes de
+ordem superior).
+(a) dimOK :: Mat a -> Bool que testa se uma matriz est´a bem constru´ıda (i.e., se todas
+as linhas tˆem a mesma dimens˜ao).
+(b) dimMat ::
+
+Mat a -> (Int,Int) que calcula a dimens˜ao de uma matriz.
+
+(c) addMat ::
+
+Mat a -> Mat a -> Mat a que adiciona duas matrizes.
+
+(d) transpose ::
+(e) multMat ::
+
+Mat a -> Mat a que calcula a transposta de uma matriz.
+
+Mat a -> Mat a -> Mat a que calcula o produto de duas matrizes.
+
+49. O Crivo de Erat´
+ostenes ´e um m´etodo simples e pr´atico para encontrar n´
+umeros primos at´e
+um certo valor limite. Pedemos descreve-lo assim:
+• come¸camos com a lista de inteiros entre 2 (o primeiro primo) e o valor limite;
+• destacamos o primeiro elemento da lista (que ir´a ficar na lista de saida), retiramos da
+cauda da lista todos os multiplos dele, e continuamos a processar a caula da lista (j´a
+filtrada) pelo mesmo m´etodo.
+Defina uma fun¸c˜
+ao que implemente este algoritmo
+50. Um multiconjunto ´e um conjunto em que a multiplicidade ´e relevante.
+S˜
+ao por isso diferentes os multiconjuntos: {1, 2, 3, 4, 1, 2, 1} e {1, 2, 3, 4}. Considere que se usa
+o seguinte tipo para representar multi-conjuntos:
+type MSet a = [(a,Int)]
+Neste tipo, o multiconjunto {’a’,’c’,’a’,’b’,’c’,’a’} ´e representado por [(’a’,3),
+(’b’,1), (’c’, 2)]. Considere ainda que estas listas est˜ao ordenadas (pela primeira componente) e que n˜
+ao h´
+a pares cuja primeira componente coincida.
+(a) Defina a fun¸c˜
+ao add :: Ord a => a -> (MSet a) -> MSet a que acrescenta um elemento a um multiconjunto.
+(b) Defina a fun¸c˜
+ao toMSet :: (Ord a) => [a] -> MSet aque constroi um multiconjunto
+com os elementos de uma lista.
+(c) Defina uma fun¸c˜
+ao moda :: MSet a -> a que determina qual o elemento mais frequente de uma multiconjunto (n˜ao vazio).
+(d) Defina as fun¸c˜
+ao mIntersect, mUnion :: (Ord a) => (MSet a) -> (MSet a) -> (MSet
+a) de intersec¸c˜
+ao e uni˜
+ao de multiconjuntos.
+51. O Teorema Fundamental da Aritm´etica (enunciado pela primeira vez por Euclides) diz que
+qualquer n´
+umero inteiro (maior do que 1) pode ser decomposto num produto de n´
+umeros
+primos. Esta decomposi¸c˜
+ao ´e al´em disso u
+´nica a menos de uma permuta¸c˜ao. Por exemplo,
+212121 = 3 × 3 × 7 × 7 × 13 × 37
+222222 = 2 × 3 × 7 × 11 × 13 × 37
+(a) Defina uma fun¸c˜
+ao factoriza :: Integer -> [Integer] que, dado um n´
+umero (maior
+do que 1) calcula a lista dos seus factores primos (por exemplo, factoriza 212121 deve
+calcular a lista [3,3,7,7,13,37]).
+
+18
+
+(b) Dadas as factoriza¸c˜
+oes de dois n´
+umeros ´e f´acil calcular (as factoriza¸c˜oes de) o m´aximo
+divisor comum (mdc) e o m´ınimo m´
+ultiplo comum (mmc).
+• o m´
+aximo divisor comum obt´em-se com os factores comuns elevados `
+a menor potˆencia.
+Assim,
+mdc 212121 222222 = mdc (32 × 72 × 131 × 371 )(21 × 31 × 71 × 111 × 131 × 371 )
+= 31 × 71 × 131 × 371
+= 10101
+• o m´ınimo m´
+ultiplo comum obt´em-se com os factores comuns e n˜
+ao comuns elevados
+`
+a maior potˆencia. Assim,
+mmc 212121 222222 = mmc (32 × 72 × 131 × 371 )(21 × 31 × 71 × 111 × 131 × 371 )
+= 21 × 32 × 72 × 111 × 131 × 371
+= 4666662
+Defina as fun¸c˜
+oes mdcF, mmcF :: Integer -> Integer -> Integer que calculam o
+m´
+aximo divisor comum e m´ınimo m´
+ultiplo comum usando as factoriza¸c˜oes dos n´
+umeros
+em causa.
+(c) Uma outra forma (muito mais eficaz) de calcular o m´aximo divisor comum entre dois
+n´
+umeros baseia-se na seguinte propriedade (tamb´em atribu´ıda a Euclides):
+mdc x y = mdc (x + y) y = mdc x (y + x)
+Apresente uma defini¸c˜
+ao da fun¸c˜ao mdc usando esta propriedade. Note ainda que a
+fun¸c˜
+ao mmc pode ser definida usando mdc:
+mmc :: Integer -> Integer -> Integer
+mmc x y = (x * y) ‘div‘ (mdc x y)
+52. Uma representa¸c˜
+ao poss´ıvel de polim´omios ´e pela sequˆencia dos coeficientes - vamos ter de
+armazenar tamb´em os coeficientes nulos pois ser´a a posi¸c˜ao do coeficiente na lista que dar´a o
+grau do mon´
+omio. Teremos ent˜
+ao
+type Polinomio = [Coeficiente]
+type Coeficiente = Float
+A representa¸c˜
+ao do polin´
+omio 2 x5 − 5 x3 ser´a ent˜ao
+[0,0,0,-5,0,2]
+que corresponde ao polin´
+omio 0 x0 + 0 x1 + 0 x2 − 5 x3 + 0 x4 + 2 x5 .
+(a) Defina a opera¸c˜
+ao que calcula o valor do polin´omio para um dado x.
+(b) Defina a opera¸c˜
+ao que calcula a derivada de um polin´omio.
+(c) Defina a opera¸c˜
+ao de adi¸c˜
+ao de polin´omios.
+(d) Defina a opera¸c˜
+ao de multiplica¸c˜ao de polin´omios.
+
+19
+
+8
+
+Data types
+
+53. Pretende-se guardar informa¸c˜
+ao sobre os anivers´arios das pessoas numa tabela que associa o
+nome de cada pessoa `
+a sua data de nascimento. Para isso, declarou-se a seguinte estrutura
+de dados
+type
+type
+type
+type
+
+Dia = Int
+Mes = Int
+Ano = Int
+Nome = String
+
+data Data = D Dia Mes Ano
+deriving Show
+type TabDN = [(Nome,Data)]
+(a) Defina a fun¸c˜
+ao procura :: Nome -> TabDN -> Maybe Data, que indica a data de
+uma dada pessoa, caso ela exista na tabela.
+(b) Defina a fun¸c˜
+ao idade :: Data -> Nome -> TabDN -> Maybe Int, que calcula a idade
+de uma pessoa numa dada data.
+(c) Defina a fun¸c˜
+ao anterior ::
+a outra data.
+
+Data -> Data -> Bool, que testa se uma data ´e anterior
+
+(d) Defina a fun¸c˜
+ao ordena :: TabDN -> TabDN, que ordena uma tabela de datas de nascimento, por ordem crescente das datas de nascimento.
+(e) Defina a fun¸c˜
+ao porIdade:: Data -> TabDN -> [(Nome,Int)], que apresenta o nome
+e a idade das pessoas, numa dada data, por ordem crescente da idade das pessoas.
+54. Considere as seguintes defini¸c˜
+oes de tipos de dados para representar uma tabela de abreviaturas
+type TabAbrev = [(Abreviatura,Palavra)]
+type Abreviatura = String
+type Palavra = String
+(a) Defina a fun¸c˜
+ao daPal :: TabAbrev -> Abreviatura -> Maybe Palavra, que dadas
+uma tabela de abreviaturas e uma abreviatura, devolve a palavra correspondente.
+(b) Analise a seguinte fun¸c˜
+ao que pretende transformar um texto, substituindo as abreviaturas que l´
+a ocorrem pelas palavras correspondentes.
+transforma :: TabAbrev -> String -> String
+transforma t s = unwords (trata t (words s))
+Apresente uma defini¸c˜
+ao adequada para a fun¸c˜ao trata e indique o seu tipo.
+55. Considere o seguinte tipo de dados que descreve a informa¸c˜ao de um extracto banc´ario. Cada
+valor deste tipo indica o saldo inicial e uma lista de movimentos. Cada movimento ´e representado por um triplo que indica a data da opera¸c˜ao, a sua descri¸c˜ao e a quantia movimentada
+(em que os valores s˜
+ao sempre n´
+umeros positivos).
+data Movimento = Credito Float | Debito Float
+data Extracto = Ext Float [(Data, String, Movimento)]
+20
+
+(a) Construa a fun¸c˜
+ao extValor :: Extracto -> Float -> [Movimento] que produz uma
+lista de todos os movimentos (cr´editos ou d´ebitos) superiores a um determinado valor.
+(b) Defina a fun¸c˜
+ao filtro :: Extracto -> [String] -> [(Data,Movimento)] que retorna informa¸c˜
+ao relativa apenas aos movimentos cuja descri¸c˜ao esteja inclu´ıda na lista
+fornecida no segundo parˆ
+ametro.
+(c) Defina a fun¸c˜
+ao creDeb :: Extracto -> (Float,Float), que retorna o total de cr´editos
+e de d´ebitos de um extracto no primeiro e segundo elementos de um par, respectivamente.
+(Tente usar um foldr na sua implementa¸c˜ao).
+(d) Defina a fun¸c˜
+ao saldo :: Extracto -> Float que devolve o saldo final que resulta
+da execu¸c˜
+ao de todos os movimentos no extracto sobre o saldo inicial. (Tente usar um
+foldr na sua implementa¸c˜
+ao).
+56. Considere o seguinte tipo para representar ´arvores bin´arias.
+data BTree a = Empty
+| Node a (BTree a) (BTree a)
+deriving Show
+Defina as seguintes fun¸c˜
+oes:
+(a) altura ::
+
+(BTree a) -> Int que calcula a altura da ´arvore.
+
+(b) contaNodos ::
+
+(BTree a) -> Int que calcula o n´
+umero de nodos da ´arvore.
+
+(c) folhas :: (BTree a) -> Int, que calcula o n´
+umero de folhas (i.e., nodos sem descendentes) da a
+´rvore.
+(d) prune :: Int -> (Btree a) -> BTree a, que remove de uma ´arvore todos os elementos a partir de uma determinada profundidade.
+(e) path :: [Bool] -> (BTree a) -> [a], que dado um caminho (False corresponde a
+esquerda e True a direita) e uma ´arvore, d´a a lista com a informa¸c˜ao dos nodos por onde
+esse caminho passa.
+(f) mirror ::
+
+(BTree a) -> BTree a, que d´a a ´arvore sim´etrica.
+
+(g) zipWithBT :: (a -> b -> c) -> (BTree a) -> (BTree b) -> BTree c que generaliza a fun¸c˜
+ao zipWith para ´
+arvores bin´arias.
+(h) unzipBT :: (BTree (a,b,c)) -> (BTree a,BTree b,BTree c), que generaliza a fun¸c˜ao
+unzip (neste caso de triplos) para ´arvores bin´arias.
+57. Considere o seguinte tipo para representar ´
+arvores bin´
+arias de procura.
+data BTree a = Empty
+| Node a (BTree a) (BTree a)
+deriving Show
+Defina as seguintes fun¸c˜
+oes:
+(a)
+
+i. Defina uma fun¸c˜
+ao minimo :: (Ord a) => BTree a -> a que calcula o menor
+elemento de uma ´
+arvore bin´aria de procura n˜
+ao vazia.
+ii. Defina uma fun¸c˜
+ao semMinimo :: (Ord a) => BTree a -> BTree a que remove
+o menor elemento de uma ´arvore bin´aria de procura n˜
+ao vazia.
+iii. Defina uma fun¸c˜
+ao minSmin :: (Ord a) => BTree a -> (a,BTree a) que calcula, com uma u
+´nica consulta da ´arvore o resultado das duas fun¸c˜oes anteriores.
+21
+
+(b)
+
+i. Defina uma fun¸c˜
+ao maximo :: (Ord a) => BTree a -> a que calcula o maior elemento de uma ´
+arvore bin´aria de procura n˜
+ao vazia.
+ii. Defina uma fun¸c˜
+ao semMaximo :: (Ord a) => BTree a -> BTree a que remove
+o maior elemento de uma ´arvore bin´aria de procura n˜
+ao vazia.
+iii. Defina uma fun¸c˜
+ao maxSmax :: (Ord a) => BTree a -> (a,BTree a) que calcula, com uma u
+´nica consulta da ´arvore o resultado das duas fun¸c˜oes anteriores.
+
+58. Considere agora que guardamos a informa¸c˜ao sobre uma turma de alunos na seguinte estructura de dados:
+type
+type
+type
+data
+data
+
+Aluno = (Numero,Nome,Regime,Classificacao)
+Numero = Int
+Nome = String
+Regime = ORD | TE | MEL deriving Show
+Classificacao = Aprov Int
+| Rep
+| Faltou
+deriving Show
+type Turma = BTree Aluno
+-- ´
+arvore bin´
+aria de procura (ordenada por n´
+umero)
+Defina as seguintes fun¸c˜
+oes:
+(a) inscNum :: Numero -> Turma -> Bool, que verifica se um aluno, com um dado n´
+umero,
+est´
+a inscrito.
+(b) inscNome ::
+est´
+a inscrito.
+
+Nome -> Turma -> Bool, que verifica se um aluno, com um dado nome,
+
+(c) trabEst :: Turma -> [(Numero,Nome)], que lista o n´
+umero e nome dos alunos trablhadoresestudantes (ordenados por n´
+umero).
+(d) nota :: Numero -> Turma -> Maybe Classificacao, que calcula a classifica¸c˜ao de
+um aluno (se o aluno n˜
+ao estiver inscrito a fun¸c˜ao deve retornar Nothing).
+(e) percFaltas ::
+avalia¸c˜
+ao.
+
+Turma -> Float, que calcula a percentagem de alunos que faltaram `a
+
+(f) mediaAprov ::
+saram.
+
+Turma -> Float, que calcula a m´edia das notas dos alunos que pas-
+
+(g) aprovAv :: Turma -> Float, que calcula o r´acio de alunos aprovados por avaliados.
+Implemente esta fun¸c˜
+ao fazendo apenas uma travessia da ´arvore.
+59. Considere que para representar ainforma¸c˜ao dos concorrentes do Dakar se utilizou o seguinte
+tipo de dados:
+type Dakar = [Piloto]
+data Piloto = Carro Numero
+| Mota
+Numero
+| Camiao Numero
+type Numero = Int
+type Nome
+= String
+data Categoria = Competicao
+
+Nome Categoria
+Nome Categoria
+Nome
+
+| Maratona
+
+22
+
+(a) Assuma que a lista est´
+a ordenada pelo nome do piloto, escreva a fun¸c˜ao inserePil ::
+Piloto -> Dakar -> Dakar que insere ordenadamente um novo piloto na lista.
+(b) Escreva uma fun¸c˜
+ao que verifica se a lista est´a ou n˜ao ordenada.
+(c) Considere que para melhorar a procura de um piloto se utilizou uma ´arvore bin´aria de
+procura, ordenada pelo n´
+umero.
+data BTree a = Vazia | Nodo a (BTree a) (BTree a)
+type Dakar = BTree Piloto
+i. Escreva uma fun¸c˜
+ao maior :: Dakar -> Piloto que calcula o piloto com n´
+umero
+maior.
+ii. Escreva uma fun¸c˜
+ao menor :: Dakar -> Piloto que calcula o piloto com n´
+umero
+menor.
+iii. Escreva uma fun¸c˜
+ao listaMotas :: Dakar -> [(Numero, Nome)] que lista ordenadamente (por n´
+umero) o numero e o nome de todos os pilotos das motas.
+60. Para armazenar uma agenda de contactos telef´onicos e de correio electr´onico definiram-se os
+seguintes tipos de dados. N˜
+ao existem nomes repetidos na agenda e para cada nome existe
+uma lista de contactos.
+data Contacto =
+|
+|
+|
+
+Casa Integer
+Trab Integer
+Tlm Integer
+Email String
+
+type Nome = String
+type Agenda = [(Nome, [Contacto])]
+(a) Defina a fun¸c˜
+ao acrescEmail :: Nome -> String -> Agenda -> Agenda que, dado
+um nome, um email e uma agenda, acrescenta essa informa¸c˜ao `a agenda.
+(b) Defina a fun¸c˜
+ao verEmails :: Nome -> Agenda -> Maybe [String] que, dado um
+nome e uma agenda, retorna a lista dos emails associados a esse nome. Se esse nome n˜ao
+existir na agenda a fun¸c˜
+ao deve retornar Nothing.
+(c) Defina a fun¸c˜
+ao consTelefs :: [Contacto] -> [Integer] que, dada uma lista de
+contactos, retorna a lista de todos os n´
+umeros de telefone dessa lista (tanto telefones
+fixos como telem´
+oveis).
+(d) Defina a fun¸c˜
+ao casa :: Nome -> Agenda -> Maybe Integer que, dado um nome e
+uma agenda, retorna o n´
+umero de telefone de casa (caso exista).
+61. Resolveu-se criar uma base de dados de v´ıdeos e, para isso, classificaram-se os v´ıdeos em:
+filmes, epis´
+odios de s´eries, shows, e outros. Para esse fim, definiram-se os seguintes tipos de
+dados.
+type BD = [Video]
+data Video = Filme
+| Serie
+| Show
+| Outro
+
+String Int
+String Int Int
+String Int
+String
+
+-- t´
+ıtulo, ano
+-- t´
+ıtulo, temporada, epis´
+odio
+-- t´
+ıtulo, ano
+
+(a) Defina a fun¸c˜
+ao espectaculos :: BD -> [(String,Int)] que indica o t´ıtulo e ano
+de todos os espet´
+aculos da base de dados.
+23
+
+(b) Defina a fun¸c˜
+ao filmesAno :: Int -> BD -> [String] que indica os t´ıtulos dos filmes
+de um dado ano que existem na base de dados.
+(c) Defina a fun¸c˜
+ao outros :: BD -> BD que seleciona da base de dados todos os v´ıdeos
+ao filmes, s´eries ou shows.
+que n˜
+ao s˜
+(d) Defina a fun¸c˜
+ao totalEp :: String -> BD -> Int que indica quantos epis´odios de
+uma dada s´erie existem na base de dados.
+62. Considere que para organizar os seus livros foi definido o seguinte tipo de dados:
+type Biblio = [Livro]
+data Livro = Romance Titulo Autor Ano Lido
+| Ficcao Titulo Autor Ano Lido
+type Titulo = String
+type Autor = String
+type Ano
+= Int
+data Lido
+= Sim
+| Nao
+(a) Escreva uma fun¸c˜
+ao que verifica se existem, ou n˜ao, livros repetidos.
+(b) Defina a fun¸c˜
+ao lido ::
+como lido na biblioteca.
+
+Biblio -> Titulo -> Biblio que marca um dado livro
+
+(c) Escreva uma fun¸c˜
+ao que calcula o n´
+umero de livros lidos.
+(d) Considere que a lista de livros est´a ordenada por ordem alfab´etica consoante o seu autor.
+Escreva uma fun¸c˜
+ao compra :: Titulo -> Autor -> Ano -> Biblio -> Biblio que
+insere ordenadamente o livro comprado (e n˜ao lido) na biblioteca.
+(e) Considere que para melhorar a procura de um livro se utilizou uma ´arvore bin´aria de
+procura, ordenada pelo t´ıtulo.
+data BTree a = Vazia | Nodo a (BTree a) (BTree a)
+type Biblio = BTree Livro
+i. Escreva uma fun¸c˜
+ao info :: Biblio -> Titulo -> Maybe Lido que indica se
+um dado livro foi dido ou n˜ao, caso exista.
+ii. Escreva uma fun¸c˜
+ao livroAutor :: Biblio -> Autor -> [Livro] que devolve
+a lista de livros do autor dado.
+iii. Escreva uma fun¸c˜
+ao naoLidos :: Biblio -> [Livro] que devolve a lista de livros
+n˜
+ao lidos (considere a possibilidade desta lista estar ordenada pelo t´ıtulo do livro).
+
+9
+
+Classes
+
+63. Considere o seguinte tipo de dados para representar frac¸c˜oes
+data Frac = F Integer Integer
+(a) Defina a fun¸c˜
+ao normaliza :: Frac -> Frac, que dada uma frac¸c˜ao calcula uma
+frac¸c˜
+ao equivalente, irredut´ıvel, e com o denominador positivo.
+Por exemplo: normaliza (F (-33) (-51)) = (F 11 17) e normaliza (F 50 (-5))
+= (F (-10) 1). Relembre a fun¸c˜ao mdc que definiu no exerc´ıcio 51c.
+24
+
+(b) Defina Frac como instˆ
+ancia da classe Eq.
+(c) Defina Frac como instˆ
+ancia da classe Ord.
+(d) Defina Frac como instˆ
+ancia da classe Show, de forma a que cada frac¸c˜ao seja apresentada
+por (numerador/denominador).
+(e) Defina Frac como instˆ
+ancia da classe Num. Relembre que a classe Num tem a seguinte
+defini¸c˜
+ao
+class (Eq a, Show a) => Num a where
+(+), (*), (-) :: a -> a -> a
+negate, abs, signum :: a -> a
+fromInteger :: Integer -> a
+(f) Defina uma fun¸c˜
+ao que, dada uma frac¸c˜ao f e uma lista de frac¸c˜oes l, selecciona de l os
+elementos que s˜
+ao maiores do que o dobro de f.
+64. Considere o seguinte tipo para representar express˜oes inteiras.
+data ExpInt =
+|
+|
+|
+|
+
+Const Int
+Simetrico ExpInt
+Mais ExpInt ExpInt
+Menos ExpInt ExpInt
+Mult ExpInt ExpInt
+
+Os termos deste tipo ExpInt podem ser vistos como ´arvores cujas folhas s˜ao inteiros e cujos
+nodos (n˜
+ao folhas) s˜
+ao operadores.
+(a) Defina uma fun¸c˜
+ao calcula ::
+cula o seu valor.
+
+ExpInt -> Int que, dada uma destas express˜oes cal-
+
+(b) Defina ExpInt como uma instˆ
+ancia da classe Show de forma a que show (Mais (Const
+3) (Menos (Const 2)(Const 5))) dˆe como resultado "(3 + (2 - 5))".
+(c) Defina uma outra fun¸c˜
+ao de convers˜ao para strings posfix :: ExpInt -> String de
+forma a que quando aplicada `
+a express˜ao acima dˆe como resultado "3 2 5 - +".
+(d) Defina ExpInt como uma instˆ
+ancia da classe Eq.
+(e) Defina ExpInt como instˆ
+ancia desta classe Num.
+65. Uma outra alternativa para representar express˜oes ´e como o somat´orio de parcelas em que
+cada parcela ´e o produto de constantes.
+data ExpN = N [Parcela]
+type Parcela = [Int]
+(a) Defina uma fun¸c˜
+ao calcN ::
+
+ExpN -> Int de c´alculo do valor de express˜oes deste tipo.
+
+(b) Defina uma fun¸c˜
+ao de convers˜
+ao normaliza ::
+
+ExpInt -> ExpN.
+
+(c) Defina ExpN como instˆ
+ancia da classe Show.
+66. Relembre o exerc´ıcio 55 sobre contas banc´arias, com a seguinte declara¸c˜ao de tipos
+data Data = D Dia Mes Ano
+data Movimento = Credito Float | Debito Float
+data Extracto = Ext Float [(Data, String, Movimento)]
+25
+
+(a) Defina Data como instˆ
+ancia da classe Ord.
+(b) Defina Data como instˆ
+ancia da classe Show.
+(c) Defina a fun¸c˜
+ao ordena :: Extracto -> Extracto, que transforma um extracto de
+modo a que a lista de movimentos apare¸ca ordenada por ordem crescente de data.
+(d) Defina Extracto como instˆ
+ancia da classe Show, de forma a que a apresenta¸c˜ao do extracto seja por ordem de data do movimento com o seguinte, e com o seguinte aspecto
+Saldo anterior: 300
+--------------------------------------Data
+Descricao
+Credito
+Debito
+--------------------------------------2010/4/5
+DEPOSITO
+2000
+2010/8/10 COMPRA
+37,5
+2010/9/1
+LEV
+60
+2011/1/7
+JUROS
+100
+2011/1/22 ANUIDADE
+8
+--------------------------------------Saldo actual: 2294,5
+(e) A fun¸c˜
+ao dmaxDebito, a seguir apresentada, calcula a data e o montante do maior d´ebito
+de um extracto.
+dmaxDebito
+dmaxDebito
+dmaxDebito
+dmaxDebito
+
+:: Extracto -> Maybe (Data,Float)
+(Ext _ []) = Nothing
+(Ext s ((d,m,Debito x):t)) = maxdeb (d,x) (dmaxDebito (Ext s t))
+(Ext s (_:t)) = dmaxDebito (Ext s t)
+
+Apresente a defini¸c˜
+ao de maxdeb e indique claramente o seu tipo.
+67. Uma poss´ıvel generaliza¸c˜
+ao do tipo de dados apresentado no exerc´ıcio 7, ser´a considerar
+express˜
+oes cujas constantes s˜
+ao de um qualquer tipo num´erico (i.e., da classe Num).
+data Exp a =
+|
+|
+|
+|
+
+Const a
+Simetrico (Exp a)
+Mais (Exp a) (Exp a)
+Menos (Exp a) (Exp a)
+Mult (Exp a) (Exp a)
+
+Declare Exp como instˆ
+ancia da classe Num, completando a seguinte defini¸c˜ao:
+instance (Num a) => Num (Exp a) where
+.......
+Note que, em rigor, dever´
+a ainda definir o tipo Exp a como uma instˆancia de Show e de Eq.
+68. Considere o seguinte tipo:
+data LTree a = Leaf a | Fork (LTree a) (LTree a)
+(a)
+
+i. Defina uma instˆ
+ancia da classe Eq para este tipo idˆentica `a que seria obtida com a
+directiva deriving Eq.
+ii. Defina a fun¸c˜
+ao mapLT :: (a -> b) -> LTree a -> LTree b que aplica uma fun¸c˜ao
+a todas as folhas de uma a´rvore. Por exemplo,
+26
+
+> mapLT succ (Fork (Fork (Leaf 0) (Leaf 1)) (Leaf 2))
+Fork (Fork (Leaf 1) (Leaf 2)) (Leaf 3)
+
+10
+
+(b)
+
+i. Defina uma instˆ
+ancia da classe Show para este tipo por forma a obter o seguinte
+comportamento.
+> Fork (Fork (Leaf 0) (Leaf 1)) (Leaf 2)
+((0/\1)/\2)
+ii. Defina a fun¸c˜
+ao mktree :: Int -> a -> LTree a que constroi uma ´arvore balanceada com um dado n´
+umero de folhas todas iguais ao segundo argumento. Por
+exemplo,
+> mktree 5 0
+((0/\0)/\(0/\(0/\0)))
+
+(c)
+
+i. Defina uma instˆ
+ancia da classe Eq para este tipo que considere iguais quaisquer duas
+arvores com a mesma forma.
+´
+ii. Defina a fun¸c˜
+ao build :: [a] -> LTree a que constroi uma ´arvore com uma folha
+por cada elemento da lista argumento (que deve ser n˜ao vazia).
+
+(d)
+
+i. Defina uma instˆ
+ancia da classe Show para este tipo que apresente uma folha por cada
+linha, precedida de tantos pontos quanta a sua profundidade na ´arvore.
+> Fork (Fork (Leaf 0) (Leaf 1)) (Leaf 2)
+..0
+..1
+.2
+Sugere-se que use uma fun¸c˜ao auxilar na defini¸c˜ao da fun¸c˜ao show.
+ii. Defina a fun¸c˜
+ao cresce :: LTree a -> LTree a que cresce uma ´arvore duplicando
+todas as suas folhas. Por exemplo,
+> cresce (Fork (Fork (Leaf 0) (Leaf 1)) (Leaf 2))
+...0
+...0
+...1
+...1
+..2
+..2
+
+Input/Output
+
+69. A classe Random da biblioteca System.Random agrupa os tipos para os quais ´e poss´ıvel gerar
+valores aleat´
+orios. Algumas das fun¸c˜oes declaradas nesta classe s˜ao:
+• randomIO :: Random a => IO a que gera um valor aleat´orio do tipo a;
+• randomRIO :: Random a => (a,a) -> IO a que gera um valor aleat´orio do tipo a dentro de uma determinada gama de valores.
+Usando estas fun¸c˜
+oes implemente os seguintes programas:
+(a) bingo :: IO () que sorteia os n´
+umeros para o jogo do bingo. Sempre que uma tecla ´e
+pressionada ´e apresentado um n´
+umero aleat´orio entre 1 e 90. Obviamente, n˜ao podem ser
+apresentados n´
+umeros repetidos e o programa termina depois de gerados os 90 n´
+umeros
+diferentes.
+
+27
+
+(b) mastermind :: IO () que implementa uma variante do jogo de descodifica¸c˜ao de padr˜oes
+Mastermind. O programa deve come¸car por gerar uma sequˆencia secreta de 4 d´ıgitos
+aleat´
+orios que o jogador vai tentar descodificar. Sempre que o jogador introduz uma
+sequˆencia de 4 d´ıgitos, o programa responde com o n´
+umero de d´ıgitos com o valor correcto na posi¸c˜
+ao correcta e com o n´
+umero de d´ıgitos com o valor correcto na posi¸c˜ao
+errada. O jogo termina quando o jogador acertar na sequˆencia de d´ıgitos secreta.
+70. Uma aposta do EuroMilh˜
+oes corresponde `a escolha de 5 N´
+umeros e 2 Estrelas. Os N´
+umeros
+s˜
+ao inteiros entre 1 e 50. As Estrelas s˜ao inteiros entre 1 e 9. Para modelar uma aposta destas
+definiu-se o seguinte tipo de dados:
+data Aposta = Ap [Int] (Int,Int)
+(a) Defina a fun¸c˜
+ao valida :: Aposta -> Bool que testa se uma dada aposta ´e v´alida
+(i.e. tem os 5 n´
+umeros e 2 estrelas, dentro dos valores aceites e n˜ao tem repeti¸c˜oes).
+(b) Defina a fun¸c˜
+ao comuns :: Aposta -> Aposta -> (Int,Int) que dada uma aposta
+e uma chave, calcula quantos n´
+umeros e quantas estrelas existem em comum nas duas
+apostas
+(c) Use a fun¸c˜
+ao da al´ınea anterior para:
+i. Definir Aposta como instˆ
+ancia da classe Eq.
+ii. Definir a fun¸c˜
+ao premio :: Aposta -> Aposta -> Maybe Int que dada uma aposta
+e a chave do concurso, indica qual o pr´emio que a aposta tem. Os pr´emios do EuroMilh˜
+oes s˜
+ao:
+N´
+umeros
+5
+5
+5
+4
+4
+4
+
+Estrelas
+2
+1
+0
+2
+1
+0
+
+Pr´
+emio
+1
+2
+3
+4
+5
+6
+
+N´
+umeros
+3
+2
+3
+3
+1
+2
+2
+
+Estrelas
+2
+2
+1
+0
+2
+1
+0
+
+Pr´
+emio
+7
+8
+9
+10
+11
+12
+13
+
+(d) Para permitir que um apostador possa jogar de forma interactiva:
+i. Defina a fun¸c˜
+ao leAposta :: IO Aposta que lˆe do teclado uma aposta. Esta
+fun¸c˜
+ao deve garantir que a aposta produzida ´e v´alida.
+ii. Defina a fun¸c˜
+ao joga :: Aposta -> IO () que recebe a chave do concurso, lˆe uma
+aposta do teclado e imprime o pr´emio no ecr˜a.
+(e) Defina a fun¸c˜
+ao geraChave::IO Aposta, que gera uma chave v´alida de forma aliat´oria.
+(f) Pretende-se agora que o programa main permita jogar v´arias vezes e dˆe a possiblidade de
+simular um novo concurso (gerando uma nova chave). Complete o programa definindo a
+fun¸c˜
+ao ciclo :: Aposta -> IO ().
+main :: IO ()
+main = do ch <- geraChave
+ciclo ch
+menu :: IO String
+menu = do { putStrLn menutxt
+; putStr "Opcao: "
+; c <- getLine
+; return c
+28
+
+}
+where menutxt = unlines ["",
+"Apostar ........... 1",
+"Gerar nova chave .. 2",
+"",
+"Sair .............. 0"]
+
+11
+
+Problemas (parte 2)
+
+71. Considere o seguinte tipo para representar ´arvores de folhas:
+data LTree a = Leaf a | Fork (LTree a) (LTree a)
+A cada folha de uma ´
+arvore pode ser associado o seu ”caminho”, que n˜ao ´e mais do que uma
+lista de Booleanos (False esquerda e True direita). Por exemplo, na ´arvore da figura temos
+a seguinte correspondˆencia entre nodos e caminhos:
+• O caminho [False,False] corresponde `a folha 3.
+• O caminho [False,True,True] corresponde `a
+folha 1.
+
+3
+
+4
+2
+
+• O caminho [True,True] n˜
+ao corresponde a nenhuma folha da ´
+arvore.
+
+1
+
+12
+10
+
+5
+
+(a) Defina uma fun¸c˜
+ao select :: LTree a -> [Bool] -> (Maybe a) que determina a
+folha seleccionada por um caminho. Se o caminho n˜ao seleccionar nenhuma folha a
+fun¸c˜
+ao deve retornar Nothing.
+(b) Defina uma fun¸c˜
+ao procura :: Eq a => LTree a -> a -> Maybe [Bool] que, procura
+um elemento numa ´
+arvore e, em caso de sucesso calcula o caminho correspondente. Por
+exemplo, se a for a ´
+arvore representada na figura, procura a 1 = Just [False,True,True].
+(c) Considere a seguinte fun¸c˜
+ao que lista as folhas de uma ´arvore, juntamente com a sua
+profundidade;
+travessia :: LTree a -> [(a,Int)]
+travessia (Leaf x) = [(x,0)]
+travessia (Fork e d) = map (\(x,n) -> (x,n+1)) (travessia e ++ travessia d)
+Defina uma fun¸c˜
+ao build :: [(a,Int)] -> LTree a inversa da anterior, i.e., tal que,
+build (travessia a) = a para toda a ´arvore a.
+72. Para armazenar conjuntos de n´
+umeros inteiros, optou-se pelo uso de sequˆencias de intervalos.
+type ConjInt = [Intervalo]
+type Intervalo = (Int,Int)
+Assim, por exemplo, o conjunto {1, 2, 3, 4, 7, 8, 19, 21, 22, 23} poderia ser representado por
+[(1,4),(7,8),(19,19),(21,23)].
+(a) Defina a fun¸c˜
+ao pertence ::
+pertence a um conjunto.
+
+Int -> ConjInt -> Bool que testa se um dado inteiro
+
+29
+
+(b) Defina uma fun¸c˜
+ao quantos :: ConjInt -> Int que, dado um conjunto, dˆe como resultado o n´
+umero de elementos desse conjunto. Por exemplo, quantos [(1,4),(7,8),(19,19),(21,23)]
+= 10.
+(c) Defina uma fun¸c˜
+ao elems :: ConjInt -> [Int] que, dado um conjunto, dˆa como resultado a lista dos elementos desse conjunto. Por exemplo, elems [(1,4),(7,8),(19,19),(21,23)]
+= [1,2,3,4,7,8,19,21,22,23].
+(d) Defina uma fun¸c˜
+ao geraconj :: [Int] -> ConjInt que recebe uma lista de inteiros,
+ordenada pordem crescente e sem repeti¸c˜oes, e gera um conjunto. Por exemplo, geraconj
+[1,2,3,4,7,8,19, 21,22,23] = [(1,4),(7,8),(19,19),(21,23)].
+73. Uma rela¸c˜
+ao bin´
+aria entre elementos de um tipo a pode ser descrita como um conjunto (lista)
+de pares [(a,a)] ou, agregando todos os pares que tˆem a primeira componente em comum,
+por uma lista do tipo [(a,[a])].
+type RelP a = [(a,a)]
+type RelL a = [(a,[a])]
+3
+Assim, a rela¸c˜
+ao representada ao lado pode ser implementada
+por
+• [ (1,3), (1,4), (2,1), (2,4), 2,5), (3,7),
+(4,7), (5,7), (6,5), (7,6)] :: RelP Int
+
+1
+
+7
+4
+6
+
+2
+5
+
+• [ (1,[3,4]), (2,[1,4,5]), (3,[7]), (4,[7]),
+(5,[7]), (6,[5]), (7,[6])] :: RelL Int
+(a) Considere a seguinte fun¸c˜
+ao de convers˜ao entre representa¸c˜oes:
+converteLP :: RelL a -> RelP a
+converteLP l = concat (map junta l)
+where junta (x,xs) = map (\y->(x,y)) xs
+Defina a fun¸c˜
+ao de convers˜
+ao convertePL :: (Eq a) => RelP a -> RelL a inversa
+da anterior, i.e., tal que convertePL( converteLP l) = l para todo l.
+(b) Defina uma fun¸c˜
+ao converso :: RelL a -> RelL a que calcula a rela¸c˜ao inversa de
+uma rela¸c˜
+ao. Por exemplo, para o exemplo apresentado a rela¸c˜ao inversa deve dar como
+resultado uma lista com os seguintes elementos:
+[(1,[2]), (3,[1]), (4,[1,2]), (5,[2,6]), (6,[7]), (7,[3,4,5])]
+74. Considere uma ´
+arvore geneal´
+ogica ascendente (que relaciona uma pessoa com os seus pais)
+implementada no seguinte tipo de de dados:
+data AG = Pessoa Nome Pai Mae
+| Desconhecida
+type Pai = AG
+type Mae = AG
+type Nome = String
+(a) Defina a fun¸c˜
+ao nomesMF :: AG -> ([Nome],[Nome]) que, para a ´arvore geneal´ogica
+de uma pessoa, calcula as listas com os nomes masculinos e os nomes femininos dos seus
+ascendentes.
+
+30
+
+(b) Defina a fun¸c˜
+ao avos :: Nome -> AG -> [Nome] que recebe o nome de uma pessoa
+e uma ´
+arvore geneal´
+ogica e d´
+a a lista com os nomes dos av´os dessa pessoa. Note que
+o nome da pessoa pode n˜
+ao estar na raiz da ´arvore. Assuma que n˜ao existem nomes
+repetidos na ´
+arvore.
+(c) Defina a fun¸c˜
+ao grau :: AG -> Nome -> Maybe Int que dada uma ´arvore geneal´ogica
+e o nome de uma pessoa, calcula o grau de parentesco entre essa pessoa e a pessoa que
+est´
+a na raiz da ´
+arvore. Assuma o grau de parentesco de pais ´e 1, de av´os ´e 2, de bisav´os
+´e 3, etc. Assuma ainda que n˜
+ao existem nomes repetidos na ´arvore.
+75. Considere a seguinte defini¸c˜
+ao para representar ´arvores irregulares
+data ArvIrr a = No a [ArvIrr a]
+A express˜
+ao No 2 [No 3 [No 6 []], No 4 [No 7 [], No 8 []], No 5 []] representa a
+arvore
+´
+
+2
+
+3
+
+6
+
+(a) Defina a fun¸c˜
+ao maximo ::
+uma destas ´
+arvores.
+
+4
+
+7
+
+5
+
+8
+
+Ord a => ArvIrr a -> a que calcula a maior elemento de
+
+(b) A fun¸c˜
+ao elems, definida abaixo, lista os elementos de uma ´arvore, bem como o n´ıvel a
+que aparecem (segundo uma travessia pre-order).
+Por exemplo, para a ´
+arvore apresentada, a fun¸c˜ao retorna a lista
+[(2,1),(3,2),(6,3),(4,2),(7,3),(8,3),(5,2)]
+elems a = elemsAux 1 a
+where elemsAux n (No x l) = (x,n):(concat (map (elemsAux (n+1)) l))
+Defina a fun¸c˜
+ao unElems :: [(a,Int)] -> ArvIrr a inversa da anterior, no sentido
+em que, para toda a ´
+arvore a, unElems (elems a) = a.
+76. A sequˆencia 1, 11, 21, 1211, 111221, 312211, . . . pode ser constru´ıda a partir do primeiro
+n´
+umero – 1– seguido da descri¸c˜
+ao do n´
+umero anterior:
+• 11 pode ser lido como um 1
+• 21 pode ser lido como dois 1’s
+• 1211 pode ser lido como um 2, um 1
+• 111221 pode ser lido como um 1, um 2’s, dois 1
+• 312211 pode ser lido como trˆes 1’s, dois 2’s, um 1
+Assim, na sequˆencia apresentada, o pr´oximo elemento seria 13112221, correspondendo `a descri¸c˜
+ao um 3, um 1, dois 2’s, dois 1’s.
+31
+
+(a) Escreva uma fun¸c˜
+ao proximo :: Integer -> Integer que dado um n´
+umero da sequˆencia,
+calcula o pr´
+oximo (segundo o m´etodo descrito).
+(b) Defina agora a fun¸c˜
+ao inversa anterior :: Integer -> Integer, que dado um elemento da sequˆencia (com excep¸c˜ao do primeiro) d´a o anterior. (Note que, `a excep¸c˜ao do
+primeiro elemento da sequˆencia, todos os elementos tˆem um n´
+umero par de algarismos).
+77. Para controlar um ve´ıculo tele-comandado, disp˜oe-se dos seguintes comandos:
+RD – Rodar `
+a direita: roda o ve´ıculo 90o no sentido dos ponteiros do rel´ogio;
+RE – Rodar `
+a esquerda: roda o ve´ıculo 90o no sentido contr´ario ao dos ponteiros do
+rel´
+ogio;
+AV – Avan¸
+car: avan¸ca o ve´ıculo uma posi¸c˜ao.
+Para representar esses comandos definiu-se o tipo:
+data Cmd = RD | RE | AV
+deriving (Eq,Show)
+(a) Defina:
+• O tipo Pos que represente a posi¸c˜ao do ve´ıculo (i.e. coordenadas do ponto e orienta¸c˜
+ao).
+• A fun¸c˜
+ao next :: Pos -> Cmd -> Pos, que dada uma posi¸c˜ao in´ıcial e um comando calcula a posi¸c˜
+ao do ve´ıculo ap´os executar esse comando.
+(b) Defina a fun¸c˜
+ao percurso que, dada uma posi¸c˜ao inicial e uma lista de comandos, retorne
+a lista das posi¸c˜
+oes percorridas pelo ve´ıculo (o percurso realizado).
+(c) Defina um predicado que verifique, dadas as posi¸c˜oes iniciais de dois ve´ıculos e as respectivas listas de comandos (uma por ve´ıculo), determine se ocorre uma colis˜ao entre
+esses ve´ıculos (i.e. se existe um momento onde ambos os ve´ıculos ocupam uma posi¸c˜ao
+no plano).
+Considere para o efeito que ap´
+os realizados todos os comandos contidos na lista, o ve´ıculo
+permanece “estacionado” na posi¸c˜ao final.
+(d) Pretende-se definir um simulador (simula :: IO()) para um ve´ıculo com a funcionalidade descrita nas al´ıneas anteriores. Para tal, considere que:
+•
+•
+•
+•
+
+o ve´ıculo desloca-se num tabuleiro de dimens˜oes 10x10 (coordenadas (0,0) at´e (9,9));
+inicialmente s˜
+ao colocados obst´aculos em 10 posi¸c˜oes aleat´orias do tabuleiro;
+a posi¸c˜
+ao inicial do ve´ıculo ´e (0,0) com orienta¸c˜ao vertical (virado para norte);
+ap´
+os a inicializa¸c˜
+ao do tabuleiro, o simulador entra num ciclo de intera¸c˜ao com o
+utilizador solicitando um comando, e apresentando a nova posi¸c˜ao/orienta¸c˜ao do
+ve´ıculo;
+• a interac¸c˜
+ao termina quando uma das seguintes condi¸c˜oes se verificar:
+– o ve´ıculo sair fora dos limites do tabuleiro;
+– o ve´ıculo chocar com um dos obst´aculos colocados no tabuleiro;
+– o ve´ıculo voltar a uma posi¸c˜ao em que j´a tenha estado.
+Relembre que para gerar um n´
+umero aleat´orio compreendido entre x e y pode utilizar a
+fun¸c˜
+ao randomRIO::(a,a) -> IO a.
+
+32
+
+78. O problema das N ra´ınhas consiste em colocar N rainhas
+num tabuleiro de xadrez com N linhas e N colunas, de
+tal forma que nenhuma rainha est´
+a amea¸cada por outra.
+Note que uma rainha amea¸ca todas as posi¸c˜oes que est˜ao
+na mesma linha, na mesma coluna ou nas mesmas diagonais. No tabuleiro ao lado apresenta-se uma solu¸c˜ao
+para este problema quando N ´e 7.
+
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+
+Uma forma de representar estas solu¸c˜oes ´e usando listas de strings. Por exemplo a lista
+["Q_", "_Q"] representa um tabuleiro de dimens˜ao 2 com duas rainhas colocadas nos cantos
+superior esquerdo e inferior direito. Para o efeito fez-se a seguinte declara¸c˜ao de tipo
+type Tabuleiro = [String]
+(a) Defina uma fun¸c˜
+ao rainhasOK que testa se uma dada solu¸c˜ao est´a correcta. Por exemplo,
+para o tabuleiro ["Q_", "_Q"] a fun¸c˜ao deve dar False como resultado, uma vez que
+as ra´ınhas se encontram na mesma diagonal.
+(b) Defina a fun¸c˜
+ao solucoes :: Int -> [Tabuleiro] qua calcula todas as solu¸c˜oes poss´ıveis
+para o problema com um dado n´
+umero de ra´ınhas. Por exemplo, para 4 ra´ınhas a solu¸c˜oes
+ser˜
+ao
+[["_Q__","___Q","Q___","__Q_"],["__Q_","Q___","___Q","_Q__"]]
+79. Considere o seguinte tipo:
+data List a b = Nil | ConsA a (List a b) | ConsB b (List a b)
+(a) Escreva uma fun¸c˜
+ao unzipAB :: List a b -> ([a],[b]) que produz as listas com
+todos os elementos dos tipos a e b contidos numa List a b
+(b) Escreva uma fun¸c˜
+ao sortA :: (Ord a) => List a b -> List a b que ordena apenas
+os elementos de tipo a da lista, mantendo os elementos de tipo b inalterados.
+80. Uma forma de representar rela¸c˜
+oes bin´arias consiste em armazenar um conjunto (ou lista) de
+pares. Outras formas alternativas consistem em armazenar estes pares agrupados segundo a
+sua primeira componente. Desta forma, a rela¸c˜ao representada como a seguinte lista de pares
+[(1,’a’), (2,’b’), (5,’d’), (1,’e’), (6,’a’), (2,’f’)]
+seria representada por
+• [(1,[’a’,’e’]), (2,[’b’,’f’]), (5,[’d’]), (6,[’a’])]
+• ou por ([1,2,5,6], g) em que g ´e a fun¸c˜ao
+g
+g
+g
+g
+
+1
+2
+5
+6
+
+=
+=
+=
+=
+
+[’a’,’e’]
+[’b’,’f’]
+[’d’]
+[’a’]
+
+Considere ent˜
+ao os seguintes tipos correspondentes a estas trˆes representa¸c˜oes:
+type Rel1 a b = [(a,b)]
+type Rel2 a b = [(a,[b])]
+type Rel3 a b = ([a], a -> [b])
+33
+
+(a) Defina as fun¸c˜
+oes de convers˜
+ao entre as v´arias representa¸c˜oes:
+rel12 :: (Eq a) => (Rel1 a b) -> Rel2 a b
+rel23 :: (Eq a) => (Rel2 a b) -> Rel3 a b
+rel31 :: (Rel3 a b) -> Rel1 a b
+(b) Defina uma fun¸c˜
+ao compoe :: (Eq c) => (Rel2 a c) -> (Rel2 c b) -> (Rel2 a b)
+que calcula a composi¸c˜
+ao de rela¸c˜oes.
+A composi¸c˜
+ao de rela¸c˜
+oes ´e semelhante `a composi¸c˜ao de fun¸c˜oes: sempre que a est´a
+relacionado com b na primeira rela¸c˜ao e b est´a relacionado com c na segunda, ent˜ao a
+est´
+a relacionado com c na composi¸c˜ao das rela¸c˜oes.
+(c) Defina uma fun¸c˜
+ao inverte :: (Eq b) => (Rel2 a b) -> (Rel2 b a) que calcula a
+inversa de uma rela¸c˜
+ao.
+Relembre que se a est´
+a relacionado com b numa rela¸c˜ao, ent˜ao b est´a relacionado com a
+na rela¸c˜
+ao inversa.
+
+34
+
+
