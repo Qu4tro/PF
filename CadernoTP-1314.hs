@@ -483,4 +483,53 @@ tempoViagemEfectiva :: Viagem -> Int
 tempoViagemEfectiva []     = 0
 tempoViagemEfectiva ((h1, h2):xs) = abs (deltaHoras h1 h2) + tempoViagemEfectiva xs
 
+tempoEspera :: Viagem -> Int
+tempoEspera [] = 0
+tempoEspera [(h1, h2)] = 0
+tempoEspera ((h1, h2), x@(h3, h4):xs) = abs (deltaHoras h3 h2) + tempoEspera (x:xs)
+
+tempoViagemTotal :: Viagem -> Int
+tempoViagemTotal viagem = tempoViagemEfectiva viagem + tempoEspera viagem
+
+--20
+
+type Rectangulo2 = (Ponto, Float, Float)
+type Triangulo = (Ponto, Ponto, Ponto)
+type Poligonal = [Ponto]
+
+comprimentoLinhaPoligonal :: Poligonal -> Int
+comprimentoLinhaPoligonal [] = 0
+comprimentoLinhaPoligonal [x] = 0
+comprimentoLinhaPoligonal (x:y:xs) = dist x y + comprimentoLinhaPoligonal (y:xs)
+
+trianguloParaPoligonal :: Triangulo -> Poligonal
+trianguloParaPoligonal (x, y, z) = [x, y, z, x]
+
+rectanguloParaPoligonal :: Rectangulo2 -> Poligonal
+rectanguloParaPoligonal (p@(x, y), w, h) = [p,             (x + w, y), 
+                                           (x + w, y - h), (x, y - h), p]
+
+fechada :: Poligonal -> Bool
+fechada []     = False
+fechada [x]    = False
+fechada [x, y] = False
+fechada (x:xs) = x == last xs
+
+triangula :: Poligonal -> [Triangulo]
+triangula [] = []
+triangula (x:y:z:xs) = (x, y, z) : triangula (x:z:xs)
+
+areaTriangulo :: Triangulo -> Float
+areaTriangulo (x, y, z)
+    = let a = dist x y
+          b = dist y z
+          c = dist z y
+          s = (a + b + c) / 2 --semi-perimetro
+      in --formula de Heron
+          sqrt (s * (s - a) * (s - b) * (s - c))
+
+areaPoligono :: Poligonal -> Float
+areaPoligono xs = sum (map areaTriangulo (triangula xs))
+
+mover :: Poligonal -> Poligonal
 
